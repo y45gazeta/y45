@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gazeta Y45</title>
+    <title>Gazeta Y45 — Архив выпусков</title>
     <style>
         :root {
             --bg-color: #ffffff;
             --text-color: #111111;
             --accent-color: #000000;
-            --secondary-text: #444444;
+            --secondary-text: #666666;
             --border-color: #dddddd;
+            --light-gray: #f9f9f9;
             --font-serif: 'Georgia', 'Times New Roman', Times, serif;
             --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
@@ -26,286 +27,507 @@
             color: var(--text-color);
             font-family: var(--font-serif);
             line-height: 1.6;
-            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
+            flex: 1;
         }
 
         /* Header */
         header {
             border-bottom: 4px solid var(--accent-color);
-            padding: 40px 0 20px;
+            padding: 40px 0;
             text-align: center;
-            position: relative;
         }
 
-        .date-line {
+        h1.logo {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin: 10px 0;
+            line-height: 1;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .tagline {
+            font-family: var(--font-sans);
+            font-style: italic;
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .intro {
+            margin-bottom: 50px;
+        }
+
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .intro p {
+            color: var(--secondary-text);
+            font-family: var(--font-sans);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Issue Selector */
+        .selector-section {
+            margin-bottom: 50px;
+        }
+
+        .selector-label {
             font-family: var(--font-sans);
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: block;
         }
 
-        h1.logo {
-            font-size: 4.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            margin: 20px 0;
-            line-height: 1;
-            font-family: 'Arial Black', 'Impact', sans-serif; /* Более строгий шрифт для названия */
-        }
-
-        nav ul {
-            list-style: none;
+        .issue-selector {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        nav a {
-            text-decoration: none;
+        .issue-input {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            font-family: var(--font-sans);
+            border: 2px solid var(--accent-color);
+            background: var(--bg-color);
             color: var(--text-color);
+            width: 150px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .issue-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+        }
+
+        .issue-input::placeholder {
+            color: var(--secondary-text);
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 1rem;
             font-family: var(--font-sans);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            transition: opacity 0.3s;
-        }
-
-        nav a:hover {
-            opacity: 0.6;
-            text-decoration: underline;
-        }
-
-        /* Main Layout */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            margin-top: 40px;
-            padding-bottom: 60px;
-        }
-
-        /* Hero Article */
-        .hero-article {
-            border-right: 1px solid var(--border-color);
-            padding-right: 40px;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 400px;
-            background-color: #f0f0f0;
-            background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%) contrast(120%);
-            margin-bottom: 25px;
-        }
-
-        .category {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: inline-block;
-            border: 1px solid var(--accent-color);
-            padding: 2px 8px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .hero-title {
-            font-size: 3rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            font-weight: 700;
+        .btn:hover {
+            background-color: #333;
+            transform: translateY(-2px);
         }
 
-        .hero-excerpt {
-            font-size: 1.2rem;
-            color: var(--secondary-text);
-            margin-bottom: 20px;
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            margin: 50px 0;
+        }
+
+        .quick-links h3 {
             font-family: var(--font-sans);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
         }
 
-        .author {
-            font-style: italic;
-            font-size: 0.9rem;
-            color: #666;
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Sidebar / Secondary Articles */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        .quick-link {
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            font-weight: 500;
+            transition: all 0.3s;
+            background: var(--light-gray);
         }
 
-        .article-card {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+        .quick-link:hover {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: var(--bg-color);
         }
 
-        .article-card:last-child {
-            border-bottom: none;
+        /* Recent Issues */
+        .recent-section {
+            margin: 60px 0;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
         }
 
-        .article-card h3 {
-            font-size: 1.5rem;
+        .recent-section h3 {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .issues-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .issue-card {
+            border: 1px solid var(--border-color);
+            padding: 25px 20px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s;
+            background: var(--bg-color);
+        }
+
+        .issue-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .issue-number {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary-text);
+            margin-bottom: 8px;
+        }
+
+        .issue-title {
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 10px;
             line-height: 1.2;
         }
 
-        .article-card p {
+        .issue-date {
             font-family: var(--font-sans);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--secondary-text);
         }
 
-        .small-img {
-            width: 100%;
-            height: 150px;
-            background-color: #eee;
-            margin-bottom: 15px;
-            filter: grayscale(100%);
-            object-fit: cover;
+        .issue-preview {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        /* Search */
+        .search-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            min-width: 250px;
+            max-width: 400px;
+            flex: 1;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
 
         /* Footer */
         footer {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            padding: 40px 0;
-            text-align: center;
+            padding: 40px 0 30px;
             font-family: var(--font-sans);
+            margin-top: auto;
         }
 
-        footer p {
-            opacity: 0.7;
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
             font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--bg-color);
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             h1.logo {
-                font-size: 3rem;
-            }
-            
-            .main-grid {
-                grid-template-columns: 1fr;
+                font-size: 3.5rem;
             }
 
-            .hero-article {
-                border-right: none;
-                padding-right: 0;
-                border-bottom: 4px solid var(--accent-color);
-                padding-bottom: 40px;
+            .issue-selector {
+                flex-direction: column;
             }
 
-            nav ul {
-                flex-wrap: wrap;
-                gap: 15px;
+            .issue-input {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
             }
         }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .issue-card {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .issue-card:nth-child(1) { animation-delay: 0.1s; }
+        .issue-card:nth-child(2) { animation-delay: 0.2s; }
+        .issue-card:nth-child(3) { animation-delay: 0.3s; }
+        .issue-card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="date-line">
-                <span id="current-date">Суббота, 02 Мая 2026</span>
-                <span>Выпуск № 45</span>
-                <span>Цена: Бесплатно</span>
-            </div>
-            
+    <header>
+        <div class="container">
             <h1 class="logo">Gazeta Y45</h1>
-            
-            <nav>
-                <ul>
-                    <li><a href="#">Главная</a></li>
-                    <li><a href="#">Политика</a></li>
-                    <li><a href="#">Технологии</a></li>
-                    <li><a href="#">Кибербезопасность</a></li>
-                    <li><a href="#">Мнения</a></li>
-                    <li><a href="#">Архив</a></li>
-                </ul>
-            </nav>
-        </header>
+            <p class="tagline">Архив выпусков • 2020–2026</p>
+        </div>
+    </header>
 
-        <main class="main-grid">
-            <!-- Основная статья -->
-            <article class="hero-article">
-                <div class="hero-image"></div>
-                <span class="category">Технологии</span>
-                <h2 class="hero-title">Новые стандарты шифрования в 2026 году</h2>
-                <p class="hero-excerpt">
-                    Как современные алгоритмы защищают данные пользователей от квантовых вычислений. Обзор новых протоколов безопасности.
-                </p>
-                <p style="margin-bottom: 20px;">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
-                <span class="author">Автор: Редакция Gazeta Y45</span>
-            </article>
+    <main class="container">
+        
+        <section class="intro">
+            <h2>Выберите выпуск</h2>
+            <p>Введите номер выпуска или выберите из последних опубликованных материалов</p>
+        </section>
 
-            <!-- Боковая колонка -->
-            <aside class="sidebar">
-                <article class="article-card">
-                    <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2069&auto=format&fit=crop" alt="News" class="small-img">
-                    <span class="category">Мир</span>
-                    <h3>Глобальное соглашение по цифровым валютам подписано</h3>
-                    <p>Страны G20 пришли к единому мнению относительно регулирования криптоактивов.</p>
-                </article>
+        <!-- Issue Selector -->
+        <section class="selector-section">
+            <span class="selector-label">Номер выпуска</span>
+            <div class="issue-selector">
+                <input 
+                    type="number" 
+                    id="issueNumber" 
+                    class="issue-input" 
+                    placeholder="№ 364" 
+                    min="1" 
+                    max="999"
+                    onkeypress="if(event.key==='Enter') goToIssue()"
+                >
+                <button class="btn" onclick="goToIssue()">Открыть</button>
+                <button class="btn btn-outline" onclick="goToLatest()">Последний</button>
+            </div>
+        </section>
 
-                <article class="article-card">
-                    <span class="category">Наука</span>
-                    <h3>Новый телескоп отправил первые снимки</h3>
-                    <p>Астрономы в шоке от детализации новых фотографий далеких галактик.</p>
-                </article>
+        <!-- Search -->
+        <section class="search-section">
+            <form class="search-form" onsubmit="searchArchive(event); return false;">
+                <input type="text" class="search-input" placeholder="Поиск по архиву (дата, тема, автор)...">
+                <button type="submit" class="btn">Найти</button>
+            </form>
+        </section>
 
-                <article class="article-card">
-                    <span class="category">Культура</span>
-                    <h3>Выставка минимализма открылась в столице</h3>
-                    <p>Черно-белая фотография снова в тренде среди современных художников.</p>
-                </article>
-            </aside>
-        </main>
-    </div>
+        <!-- Quick Links -->
+        <section class="quick-links">
+            <h3>Быстрый переход</h3>
+            <div class="links-grid">
+                <a href="v364.html" class="quick-link">№ 364</a>
+                <a href="v363.html" class="quick-link">№ 363</a>
+                <a href="v362.html" class="quick-link">№ 362</a>
+                <a href="v361.html" class="quick-link">№ 361</a>
+                <a href="v360.html" class="quick-link">№ 360</a>
+                <a href="archive.html" class="quick-link">Все выпуски</a>
+            </div>
+        </section>
+
+        <!-- Recent Issues -->
+        <section class="recent-section">
+            <h3>Последние выпуски</h3>
+            <div class="issues-list">
+                <a href="v364.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 364</div>
+                    <div class="issue-title">Квантовые прорывы и новые стандарты</div>
+                    <div class="issue-date">10 мая 2026</div>
+                    <div class="issue-preview">Технологии, наука, международная повестка</div>
+                </a>
+                
+                <a href="v363.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 363</div>
+                    <div class="issue-title">Цифровая экономика: итоги квартала</div>
+                    <div class="issue-date">3 мая 2026</div>
+                    <div class="issue-preview">Финансы, регуляции, крипторынок</div>
+                </a>
+                
+                <a href="v362.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 362</div>
+                    <div class="issue-title">Культурный код: искусство в эпоху ИИ</div>
+                    <div class="issue-date">26 апреля 2026</div>
+                    <div class="issue-preview">Культура, мнения, интервью</div>
+                </a>
+                
+                <a href="v361.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 361</div>
+                    <div class="issue-title">Климатический саммит: новые обязательства</div>
+                    <div class="issue-date">19 апреля 2026</div>
+                    <div class="issue-preview">Экология, политика, технологии</div>
+                </a>
+            </div>
+        </section>
+
+    </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Gazeta Y45. Все права защищены.</p>
-            <p>Дизайн вдохновлен классической журналистикой.</p>
+            <div class="footer-content">
+                <div class="copyright">
+                    &copy; 2026 Gazeta Y45. Все права защищены.
+                </div>
+                <div class="footer-links">
+                    <a href="#">О газете</a>
+                    <a href="#">Редакция</a>
+                    <a href="#">Подписка</a>
+                    <a href="#">Контакты</a>
+                    <a href="#">Правовая информация</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Скрипт для установки актуальной даты
-        const dateElement = document.getElementById('current-date');
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const today = new Date();
-        
-        // Устанавливаем дату из контекста (2 мая 2026) или текущую
-        // Если нужно жестко задать дату:
-        // dateElement.textContent = "Суббота, 02 Мая 2026";
-        
-        // Иначе используем реальную дату системы:
-        dateElement.textContent = today.toLocaleDateString('ru-RU', options);
+        // Переход к выпуску по номеру
+        function goToIssue() {
+            const input = document.getElementById('issueNumber');
+            const issueNum = input.value.trim();
+            
+            if (issueNum && issueNum >= 1 && issueNum <= 999) {
+                // Форматируем номер с ведущими нулями при необходимости
+                const paddedNum = issueNum.padStart(3, '0');
+                window.location.href = `v${paddedNum}.html`;
+            } else {
+                alert('Введите корректный номер выпуска (1–999)');
+            }
+        }
+
+        // Переход к последнему выпуску
+        function goToLatest() {
+            window.location.href = 'v364.html';
+        }
+
+        // Поиск по архиву (заглушка)
+        function searchArchive(event) {
+            event.preventDefault();
+            const query = event.target.querySelector('.search-input').value.trim();
+            if (query) {
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        // Поддержка навигации с клавиатуры
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('issueNumber');
+            input.addEventListener('input', (e) => {
+                // Ограничиваем ввод только цифрами
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            });
+        });
     </script>
 </body>
 </html>
