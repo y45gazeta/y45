@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Y45 - Выпуск №2</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #444444;
+            --border-color: #dddddd;
+            --light-gray: #f5f5f5;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 30px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .issue-info {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .date-display {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        h1.logo {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin: 20px 0;
+            line-height: 1;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.5;
+        }
+
+        .section-header {
+            border-top: 3px solid var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            margin: 50px 0 30px;
+        }
+
+        .section-title {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 8px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .hero-article {
+            border-right: 1px solid var(--border-color);
+            padding-right: 40px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) contrast(120%);
+            margin-bottom: 25px;
+        }
+
+        .category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 2px solid var(--accent-color);
+            padding: 4px 12px;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .category.outline {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-excerpt {
+            font-size: 1.25rem;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+            font-family: var(--font-sans);
+            line-height: 1.6;
+        }
+
+        .hero-content {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .author {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+            display: block;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .article-card {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        .article-card:last-child { border-bottom: none; }
+
+        .article-card h3 {
+            font-size: 1.4rem;
+            margin: 12px 0;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+        }
+
+        .small-img {
+            width: 100%;
+            height: 180px;
+            background-color: #eee;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .article-block {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+        }
+
+        .article-block h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .article-block .article-image {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        .article-block p {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--secondary-text);
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .read-more:hover { opacity: 0.7; }
+
+        .quote-block {
+            background: var(--light-gray);
+            border-left: 5px solid var(--accent-color);
+            padding: 30px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-weight: bold;
+            font-style: normal;
+            font-family: var(--font-sans);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            border: 3px solid var(--accent-color);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 25px;
+            position: relative;
+        }
+
+        .modal-category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            background: var(--bg-color);
+            color: var(--accent-color);
+            padding: 4px 12px;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover { opacity: 0.7; }
+
+        .modal-body { padding: 30px; }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            margin-bottom: 25px;
+        }
+
+        .modal-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .modal-text p { margin-bottom: 20px; }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-author { font-style: italic; }
+        .modal-date { font-weight: 600; }
+
+        footer {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 50px 0 30px;
+            text-align: center;
+            font-family: var(--font-sans);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        footer .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            h1.logo { font-size: 3rem; }
+            .main-grid { grid-template-columns: 1fr; }
+            .hero-article {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 4px solid var(--accent-color);
+                padding-bottom: 40px;
+            }
+            .articles-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2rem; }
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .modal-title { font-size: 1.5rem; }
+            .modal-image { height: 250px; }
+            .modal-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <span class="date-display">2 мая 2026 г.</span>
+                <span class="issue-info">Выпуск №2</span>
+                <span>Цена: Бесплатно</span>
+            </div>
+            
+            <h1 class="logo">Gazeta Y45</h1>
+            
+            <p class="subtitle">
+                Выпуск №2: Глобальное соглашение по цифровым валютам<br>
+                Главные новости за 2 мая 2026 г. Аналитика, репортажи и экспертные оценки.
+            </p>
+        </header>
+
+        <!-- Экономика -->
+        <section class="section-header">
+            <h2 class="section-title">Экономика</h2>
+        </section>
+
+        <main class="main-grid">
+            <!-- Основная статья -->
+            <article class="hero-article">
+                <div class="hero-image"></div>
+                <span class="category">Финансы и технологии</span>
+                <h2 class="hero-title">Глобальное соглашение по цифровым валютам</h2>
+                <p class="hero-excerpt">
+                    Центральные банки 45 стран подписали историческое соглашение о регулировании 
+                    цифровых валют и создании единых стандартов для трансграничных платежей.
+                </p>
+                <div class="hero-content">
+                    <p>
+                        2 мая 2026 года стало поворотным моментом в истории мировой финансовой системы. 
+                        Представители центральных банков 45 государств, включая США, ЕС, Китай и Россию, 
+                        подписали в Женеве «Женевский протокол» — первое в истории многостороннее 
+                        соглашение о регулировании цифровых валют центральных банков (CBDC).
+                    </p>
+                    <p>
+                        Соглашение устанавливает единые технические стандарты для межгосударственных 
+                        расчётов, правила защиты персональных данных и механизмы предотвращения 
+                        отмывания денег в цифровой среде.
+                    </p>
+                    <div class="quote-block">
+                        "Это не просто технический документ. Это фундамент новой финансовой архитектуры, 
+                        которая должна сделать международные платежи быстрее, дешевле и прозрачнее."
+                        <div class="quote-author">— Мария Шваб, директор МВФ по цифровым инновациям</div>
+                    </div>
+                    <p>
+                        Внедрение новых стандартов начнётся с пилотных проектов в шести регионах. 
+                        Полномасштабный запуск запланирован на первый квартал 2027 года.
+                    </p>
+                </div>
+                <span class="author">Автор: Редакция Gazeta Y45</span>
+            </article>
+
+            <!-- Боковая колонка -->
+            <aside class="sidebar">
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop" alt="Crypto" class="small-img">
+                    <span class="category outline">Экономика</span>
+                    <h3>Биткоин реагирует на новости регуляторов</h3>
+                    <p>Курс биткоина вырос на 8% после объявления о новых правилах. 
+                    Эксперты прогнозируют рост институционального интереса к криптоактивам.</p>
+                </article>
+
+                <article class="article-card">
+                    <span class="category outline">Экономика</span>
+                    <h3>Рубль укрепился на фоне соглашения</h3>
+                    <p>Национальная валюта показала рост к основным валютам после новостей 
+                    о включении цифрового рубля в международную систему расчётов.</p>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Banking" class="small-img">
+                    <span class="category outline">Экономика</span>
+                    <h3>Банки готовятся к цифровому переходу</h3>
+                    <p>Крупнейшие российские банки объявили о запуске пилотных проектов 
+                    по интеграции цифрового рубля в свои платформы.</p>
+                </article>
+            </aside>
+        </main>
+
+        <!-- Культура -->
+        <section class="section-header">
+            <h2 class="section-title">Культура</h2>
+        </section>
+
+        <div class="articles-grid">
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop" alt="Digital Art" class="article-image">
+                <span class="category outline">Культура</span>
+                <h3>Цифровое искусство на блокчейне: новый рынок</h3>
+                <p>
+                    После подписания финансового соглашения художники получили новые возможности 
+                    для монетизации своих работ через смарт-контракты. Платформы на базе 
+                    блокчейна фиксируют авторские права и автоматически распределяют роялти.
+                </p>
+                <p>
+                    Эксперты отмечают рост спроса на цифровые коллекции: за первый квартал 
+                    2026 года объём рынка вырос на 340%.
+                </p>
+                <button class="read-more" data-modal="modal1">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop" alt="Museum" class="article-image">
+                <span class="category outline">Культура</span>
+                <h3>Виртуальные музеи открывают доступ к шедеврам</h3>
+                <p>
+                    Эрмитаж, Лувр и Метрополитен-музей запустили совместную платформу 
+                    виртуальных экскурсий в формате VR. Пользователи могут «пройтись» 
+                    по залам и рассмотреть экспонаты в деталях.
+                </p>
+                <p>
+                    Проект поддерживается новыми цифровыми платёжными системами — 
+                    билеты можно приобрести в цифровых валютах.
+                </p>
+                <button class="read-more" data-modal="modal2">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop" alt="Music" class="article-image">
+                <span class="category outline">Культура</span>
+                <h3>Музыкальная индустрия переходит на смарт-контракты</h3>
+                <p>
+                    Крупные лейблы начали использовать блокчейн для прозрачного 
+                    распределения доходов между авторами, исполнителями и продюсерами.
+                </p>
+                <p>
+                    Технология позволяет отслеживать каждое воспроизведение трека 
+                    и автоматически начислять вознаграждение в реальном времени.
+                </p>
+                <button class="read-more" data-modal="modal3">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1507238621213-4ea89b8a6c57?q=80&w=2070&auto=format&fit=crop" alt="Literature" class="article-image">
+                <span class="category outline">Культура</span>
+                <h3>Литературные премии в цифровом формате</h3>
+                <p>
+                    Организаторы премии «Большая книга» анонсировали приём работ 
+                    в формате интерактивных цифровых изданий с мультимедийным контентом.
+                </p>
+                <p>
+                    Голосование жюри будет проходить на защищённой платформе с использованием 
+                    цифровых подписей для обеспечения прозрачности процесса.
+                </p>
+                <button class="read-more" data-modal="modal4">Читать далее →</button>
+            </article>
+        </div>
+
+        <!-- Дополнительные новости -->
+        <section class="section-header">
+            <h2 class="section-title">Главные новости дня</h2>
+        </section>
+
+        <div class="main-grid">
+            <aside class="sidebar" style="flex-direction: row; flex-wrap: wrap;">
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Технологии</span>
+                    <h3>Запущен тестовый шлюз для цифровых валют</h3>
+                    <p>Межбанковская платформа начала пилотную работу с участием 12 финансовых организаций.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Общество</span>
+                    <h3>Опрос: 72% поддерживают цифровой рубль</h3>
+                    <p>ВЦИОМ представил данные о росте доверия граждан к национальным цифровым валютам.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Мир</span>
+                    <h3>ЕС одобрил рамочный закон о криптоактивах</h3>
+                    <p>Европарламент завершил работу над регламентом MiCA, который вступит в силу в 2027 году.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Бизнес</span>
+                    <h3>Стартапы привлекают рекордные инвестиции</h3>
+                    <p>Венчурные фонды вложили $4.2 млрд в проекты, связанные с цифровыми финансами.</p>
+                </article>
+            </aside>
+        </div>
+
+    </div>
+
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Культура</span>
+                <h2 class="modal-title">Цифровое искусство на блокчейне: новый рынок</h2>
+                <button class="modal-close" data-close="modal1">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop" alt="Digital Art" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 2 мая 2026 года.</strong> Подписание «Женевского протокола» дало новый импульс развитию рынка цифрового искусства. Художники получили юридически защищённый инструмент для монетизации своих работ через смарт-контракты.</p>
+                    
+                    <p>Ключевые преимущества новой системы:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Автоматическое начисление роялти при каждой перепродаже</li>
+                        <li>Неизменяемая запись авторства в блокчейне</li>
+                        <li>Прозрачная история владения произведением</li>
+                        <li>Возможность создания ограниченных цифровых серий</li>
+                        <li>Интеграция с международными платёжными системами</li>
+                    </ul>
+
+                    <p>По данным аналитической компании ArtChain, объём рынка цифрового искусства в первом квартале 2026 года составил $1.8 млрд, что на 340% больше аналогичного периода прошлого года.</p>
+
+                    <div class="quote-block">
+                        "Блокчейн не заменяет творчество, а даёт художникам инструменты, о которых они могли только мечтать. Теперь автор получает справедливую долю от успеха своей работы."
+                        <div class="quote-author">— Анна Лебедева, цифровая художница</div>
+                    </div>
+
+                    <p>Крупнейшие аукционные дома — Sotheby's и Christie's — уже запустили специализированные платформы для торгов цифровыми лотами с поддержкой цифровых валют центральных банков.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Екатерина Волкова, культурный обозреватель</span>
+                <span class="modal-date">2 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Культура</span>
+                <h2 class="modal-title">Виртуальные музеи открывают доступ к шедеврам</h2>
+                <button class="modal-close" data-close="modal2">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop" alt="Virtual Museum" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 2 мая 2026 года.</strong> Эрмитаж, Лувр и Метрополитен-музей объединили усилия для запуска глобальной платформы виртуальных экскурсий CultureVR. Проект позволяет пользователям со всего мира посещать экспозиции в формате виртуальной реальности.</p>
+                    
+                    <p>Особенности платформы:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>3D-сканирование экспонатов в разрешении 8K</li>
+                        <li>Интерактивные аудиогиды с ИИ-переводом на 40 языков</li>
+                        <li>Возможность «прикоснуться» к экспонатам через тактильные контроллеры</li>
+                        <li>Эксклюзивные экскурсии с кураторами в реальном времени</li>
+                        <li>Оплата билетов в цифровых валютах центральных банков</li>
+                    </ul>
+
+                    <p>За первую неделю после запуска платформой воспользовались более 200 000 пользователей из 78 стран. Особой популярностью пользуются виртуальные туры по закрытым фондам музеев.</p>
+
+                    <div class="quote-block">
+                        "Искусство должно быть доступно каждому, независимо от географии и физических возможностей. Технологии стирают эти границы."
+                        <div class="quote-author">— Михаил Пиотровский, директор Эрмитажа</div>
+                    </div>
+
+                    <p>В ближайшее время к платформе присоединятся ещё 15 музеев мира, включая Прадо, Уффици и Национальный музей Токио.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Сергей Иванов, специальный корреспондент</span>
+                <span class="modal-date">2 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Культура</span>
+                <h2 class="modal-title">Музыкальная индустрия переходит на смарт-контракты</h2>
+                <button class="modal-close" data-close="modal3">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop" alt="Music Industry" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 2 мая 2026 года.</strong> Крупнейшие звукозаписывающие лейблы — Universal, Sony и Warner — объявили о переходе на блокчейн-платформу для распределения доходов от стриминга.</p>
+                    
+                    <p>Как работает новая система:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Каждое воспроизведение трека фиксируется в реестре</li>
+                        <li>Смарт-контракт автоматически рассчитывает доли авторов</li>
+                        <li>Выплаты происходят в реальном времени в цифровой валюте</li>
+                        <li>Прозрачная отчётность для всех участников процесса</li>
+                        <li>Защита от манипуляций со статистикой прослушиваний</li>
+                    </ul>
+
+                    <p>По оценкам экспертов, новая система позволит сократить время выплат с 6-9 месяцев до 24-48 часов и уменьшить административные издержки на 40%.</p>
+
+                    <div class="quote-block">
+                        "Музыканты годами ждали справедливого распределения доходов. Блокчейн делает процесс прозрачным и автоматизированным."
+                        <div class="quote-author">— Дмитрий Козлов, продюсер</div>
+                    </div>
+
+                    <p>Пилотный проект уже запущен для 500 независимых исполнителей. Полномасштабное внедрение запланировано на сентябрь 2026 года.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Юлия Морозова, музыкальный обозреватель</span>
+                <span class="modal-date">2 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Культура</span>
+                <h2 class="modal-title">Литературные премии в цифровом формате</h2>
+                <button class="modal-close" data-close="modal4">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1507238621213-4ea89b8a6c57?q=80&w=2070&auto=format&fit=crop" alt="Literature" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 2 мая 2026 года.</strong> Организаторы премии «Большая книга» анонсировали революционные изменения в формате подачи работ. С 2027 года авторы смогут представлять произведения в виде интерактивных цифровых изданий.</p>
+                    
+                    <p>Новый формат включает:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Текст с мультимедийными вставками (аудио, видео, анимация)</li>
+                        <li>Интерактивные сюжетные ветвления для экспериментальной прозы</li>
+                        <li>Встроенные комментарии автора и редактора</li>
+                        <li>Возможность обновления контента после публикации</li>
+                        <li>Защита авторских прав через цифровые сертификаты</li>
+                    </ul>
+
+                    <p>Голосование жюри будет проходить на защищённой платформе с использованием цифровых подписей. Каждый этап оценки будет фиксироваться в блокчейне для обеспечения прозрачности.</p>
+
+                    <div class="quote-block">
+                        "Литература эволюционирует вместе с технологиями. Мы не отказываемся от традиционной книги, но открываем пространство для новых форм творчества."
+                        <div class="quote-author">— Елена Чижова, председатель жюри</div>
+                    </div>
+
+                    <p>Приём заявок в новом формате начнётся 1 сентября 2026 года. Технические требования и шаблоны для авторов будут опубликованы на сайте премии.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Андрей Петров, литературный критик</span>
+                <span class="modal-date">2 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">GAZETA Y45</div>
+            <p>Выпуск №2 от 2 мая 2026 года</p>
+            <p>Аналитика. Репортажи. Экспертные оценки.</p>
+            
+            <div class="footer-info">
+                <p>&copy; 2026 Gazeta Y45. Все права защищены.</p>
+                <p>Главный редактор: Редакция Gazeta Y45</p>
+                <p>Дизайн вдохновлен классической журналистикой</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const openButtons = document.querySelectorAll('[data-modal]');
+            const closeButtons = document.querySelectorAll('[data-close]');
+            const modals = document.querySelectorAll('.modal');
+
+            openButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-close');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
