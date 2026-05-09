@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Y45 - Выпуск №1</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #444444;
+            --border-color: #dddddd;
+            --light-gray: #f5f5f5;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 30px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .issue-info {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .date-display {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        h1.logo {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin: 20px 0;
+            line-height: 1;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.5;
+        }
+
+        /* Section Headers */
+        .section-header {
+            border-top: 3px solid var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            margin: 50px 0 30px;
+        }
+
+        .section-title {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 8px 20px;
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        /* Hero Article */
+        .hero-article {
+            border-right: 1px solid var(--border-color);
+            padding-right: 40px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) contrast(120%);
+            margin-bottom: 25px;
+        }
+
+        .category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 2px solid var(--accent-color);
+            padding: 4px 12px;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .category.outline {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-excerpt {
+            font-size: 1.25rem;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+            font-family: var(--font-sans);
+            line-height: 1.6;
+        }
+
+        .hero-content {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .author {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+            display: block;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .article-card {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        .article-card:last-child {
+            border-bottom: none;
+        }
+
+        .article-card h3 {
+            font-size: 1.4rem;
+            margin: 12px 0;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+        }
+
+        .small-img {
+            width: 100%;
+            height: 180px;
+            background-color: #eee;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        /* Two Column Layout for Articles */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .article-block {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+        }
+
+        .article-block h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .article-block .article-image {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        .article-block p {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--secondary-text);
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .read-more:hover {
+            opacity: 0.7;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--light-gray);
+            border-left: 5px solid var(--accent-color);
+            padding: 30px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-weight: bold;
+            font-style: normal;
+            font-family: var(--font-sans);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            border: 3px solid var(--accent-color);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 25px;
+            position: relative;
+        }
+
+        .modal-category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            background: var(--bg-color);
+            color: var(--accent-color);
+            padding: 4px 12px;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            margin-bottom: 25px;
+        }
+
+        .modal-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .modal-text p {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-author {
+            font-style: italic;
+        }
+
+        .modal-date {
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 50px 0 30px;
+            text-align: center;
+            font-family: var(--font-sans);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        footer .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1.logo {
+                font-size: 3rem;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-article {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 4px solid var(--accent-color);
+                padding-bottom: 40px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-image {
+                height: 250px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <span class="date-display">1 мая 2026 г.</span>
+                <span class="issue-info">Выпуск №1</span>
+                <span>Цена: Бесплатно</span>
+            </div>
+            
+            <h1 class="logo">Gazeta Y45</h1>
+            
+            <p class="subtitle">
+                Выпуск №1: Новые стандарты шифрования в 2026 году<br>
+                Главные новости за 1 мая 2026 г. Аналитика, репортажи и экспертные оценки.
+            </p>
+        </header>
+
+        <!-- Политика -->
+        <section class="section-header">
+            <h2 class="section-title">Политика</h2>
+        </section>
+
+        <main class="main-grid">
+            <!-- Основная статья -->
+            <article class="hero-article">
+                <div class="hero-image"></div>
+                <span class="category">Технологии и безопасность</span>
+                <h2 class="hero-title">Новые стандарты шифрования в 2026 году</h2>
+                <p class="hero-excerpt">
+                    Как современные алгоритмы защищают данные пользователей от квантовых вычислений. 
+                    Обзор новых протоколов безопасности, внедряемых по всему миру.
+                </p>
+                <div class="hero-content">
+                    <p>
+                        В 2026 году мир столкнулся с необходимостью кардинального пересмотра подходов 
+                        к защите информации. Квантовые компьютеры, еще недавно казавшиеся теоретической 
+                        угрозой, теперь представляют реальную опасность для существующих криптографических систем.
+                    </p>
+                    <p>
+                        Международная организация по стандартизации (ISO) утвердила новые протоколы 
+                        постквантового шифрования, которые должны быть внедрены всеми государственными 
+                        учреждениями и критически важными инфраструктурами до конца года.
+                    </p>
+                    <div class="quote-block">
+                        "Мы находимся на пороге новой эры кибербезопасности. Те методы защиты, 
+                        которые служили нам десятилетиями, больше не могут гарантировать безопасность 
+                        данных в эпоху квантовых вычислений."
+                        <div class="quote-author">— д-р Александр Петров, эксперт по кибербезопасности</div>
+                    </div>
+                    <p>
+                        Крупнейшие технологические компании уже начали переход на новые алгоритмы. 
+                        Google, Microsoft и Apple объявили о планах полного обновления своих систем 
+                        шифрования в ближайшие шесть месяцев.
+                    </p>
+                </div>
+                <span class="author">Автор: Редакция Gazeta Y45</span>
+            </article>
+
+            <!-- Боковая колонка -->
+            <aside class="sidebar">
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?q=80&w=2070&auto=format&fit=crop" alt="Politics" class="small-img">
+                    <span class="category outline">Политика</span>
+                    <h3>Саммит G20: новые соглашения по цифровому регулированию</h3>
+                    <p>Лидеры стран большой двадцатки подписали историческое соглашение о единых 
+                    стандартах регулирования криптовалют и цифровых активов.</p>
+                </article>
+
+                <article class="article-card">
+                    <span class="category outline">Политика</span>
+                    <h3>Европейский парламент принял закон об ИИ</h3>
+                    <p>Новое законодательство устанавливает строгие рамки использования искусственного 
+                    интеллекта в государственном секторе.</p>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=1974&auto=format&fit=crop" alt="Diplomacy" class="small-img">
+                    <span class="category outline">Политика</span>
+                    <h3>Дипломатический прорыв в переговорах по климату</h3>
+                    <p>Страны достигли соглашения о новых целях по сокращению выбросов к 2030 году.</p>
+                </article>
+            </aside>
+        </main>
+
+        <!-- Общество -->
+        <section class="section-header">
+            <h2 class="section-title">Общество</h2>
+        </section>
+
+        <div class="articles-grid">
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1573166364550-4c4161f84011?q=80&w=2070&auto=format&fit=crop" alt="Society" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Цифровая грамотность стала обязательным предметом</h3>
+                <p>
+                    С нового учебного года во всех школах страны вводится обязательный курс 
+                    цифровой грамотности и кибербезопасности. Программа включает основы защиты 
+                    персональных данных, распознавание киберугроз и безопасное поведение в интернете.
+                </p>
+                <p>
+                    Министерство образования подчеркивает, что в условиях цифровой трансформации 
+                    общества эти навыки становятся такими же важными, как чтение и письмо.
+                </p>
+                <button class="read-more" data-modal="modal1">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop" alt="Health" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Новая программа здравоохранения запущена</h3>
+                <p>
+                    Правительство объявило о запуске масштабной программы модернизации системы 
+                    здравоохранения. В рамках программы планируется внедрение телемедицины во 
+                    всех регионах и создание единой цифровой платформы медицинских данных.
+                </p>
+                <p>
+                    Особое внимание уделяется профилактике заболеваний и ранней диагностике с 
+                    применением искусственного интеллекта.
+                </p>
+                <button class="read-more" data-modal="modal2">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" alt="Business" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Удаленная работа становится нормой</h3>
+                <p>
+                    По данным последнего исследования, более 60% компаний перешли на гибридный 
+                    формат работы. Эксперты отмечают изменение подхода к организации труда и 
+                    корпоративной культуре.
+                </p>
+                <p>
+                    Новые технологии позволяют эффективно работать из любой точки мира, что 
+                    меняет рынок недвижимости и городскую инфраструктуру.
+                </p>
+                <button class="read-more" data-modal="modal3">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop" alt="Culture" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Фестиваль цифровой культуры</h3>
+                <p>
+                    В столице открылся крупнейший фестиваль, посвященный цифровому искусству и 
+                    технологиям. Выставка включает интерактивные инсталляции, VR-экспозиции и 
+                    произведения, созданные с помощью искусственного интеллекта.
+                </p>
+                <p>
+                    Мероприятие привлекает тысячи посетителей и становится площадкой для дискуссий 
+                    о будущем культуры в цифровую эпоху.
+                </p>
+                <button class="read-more" data-modal="modal4">Читать далее →</button>
+            </article>
+        </div>
+
+        <!-- Дополнительные новости -->
+        <section class="section-header">
+            <h2 class="section-title">Главные новости дня</h2>
+        </section>
+
+        <div class="main-grid">
+            <aside class="sidebar" style="flex-direction: row; flex-wrap: wrap;">
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Экономика</span>
+                    <h3>Центробанк сохранил ключевую ставку</h3>
+                    <p>На заседании совета директоров принято решение оставить ставку на уровне 12% годовых.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Наука</span>
+                    <h3>Прорыв в области термоядерного синтеза</h3>
+                    <p>Ученые сообщили о достижении положительного энергетического баланса в эксперименте.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Спорт</span>
+                    <h3>Чемпионат мира по киберспорту</h3>
+                    <p>Сборная страны вышла в финал крупнейшего турнира по League of Legends.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Культура</span>
+                    <h3>Новый рекорд посещаемости музеев</h3>
+                    <p>За первый квартал 2026 года музеи посетили более 10 миллионов человек.</p>
+                </article>
+            </aside>
+        </div>
+
+    </div>
+
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Цифровая грамотность стала обязательным предметом</h2>
+                <button class="modal-close" data-close="modal1">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1573166364550-4c4161f84011?q=80&w=2070&auto=format&fit=crop" alt="Digital Literacy" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 1 мая 2026 года.</strong> С нового учебного года во всех школах страны вводится обязательный курс цифровой грамотности и кибербезопасности. Это решение стало ответом на стремительную цифровизацию общества и рост киберугроз.</p>
+                    
+                    <p>Программа курса разработана совместно с ведущими IT-компаниями и экспертами по кибербезопасности. Она включает следующие разделы:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Основы защиты персональных данных</li>
+                        <li>Распознавание фишинга и других киберугроз</li>
+                        <li>Безопасное поведение в социальных сетях</li>
+                        <li>Критическое мышление при работе с информацией</li>
+                        <li>Основы программирования и алгоритмического мышления</li>
+                        <li>Цифровая гигиена и здоровое использование технологий</li>
+                    </ul>
+
+                    <p>Министерство образования подчеркивает, что в условиях цифровой трансформации общества эти навыки становятся такими же важными, как чтение и письмо. По словам министра образования Анны Соколовой, "цифровая грамотность — это не просто умение пользоваться компьютером, это способность безопасно и эффективно жить в цифровом мире".</p>
+
+                    <p>Для подготовки учителей уже запущена программа переподготовки. Более 50 000 педагогов пройдут курсы повышения квалификации в течение лета. Также разработаны интерактивные учебные материалы и онлайн-платформа для обучения.</p>
+
+                    <div class="quote-block">
+                        "Мы готовим детей к будущему, которое уже наступило. Цифровая грамотность должна стать такой же естественной частью образования, как математика или литература."
+                        <div class="quote-author">— Анна Соколова, министр образования</div>
+                    </div>
+
+                    <p>Родители положительно восприняли нововведение. По данным опроса, 87% родителей считают, что такие знания необходимы современным школьникам.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Мария Иванова, специальный корреспондент</span>
+                <span class="modal-date">1 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Новая программа здравоохранения запущена</h2>
+                <button class="modal-close" data-close="modal2">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop" alt="Healthcare" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 1 мая 2026 года.</strong> Правительство объявило о запуске масштабной программы модернизации системы здравоохранения, рассчитанной на ближайшие пять лет. Бюджет программы составляет 2.5 триллиона рублей.</p>
+                    
+                    <p>Основные направления программы:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Внедрение телемедицины во всех регионах страны</li>
+                        <li>Создание единой цифровой платформы медицинских данных</li>
+                        <li>Модернизация оборудования в поликлиниках и больницах</li>
+                        <li>Подготовка медицинских кадров с использованием VR-технологий</li>
+                        <li>Развитие профилактической медицины</li>
+                    </ul>
+
+                    <p>Особое внимание уделяется профилактике заболеваний и ранней диагностике с применением искусственного интеллекта. Системы ИИ будут анализировать медицинские данные пациентов и помогать врачам выявлять заболевания на ранних стадиях.</p>
+
+                    <p>Телемедицинские консультации станут доступны жителям даже самых отдаленных районов. Для этого планируется установить более 10 000 телемедицинских терминалов в сельских медицинских пунктах.</p>
+
+                    <div class="quote-block">
+                        "Здоровье нации — наш приоритет. Новые технологии позволят сделать качественную медицинскую помощь доступной каждому гражданину, независимо от места проживания."
+                        <div class="quote-author">— Михаил Петров, министр здравоохранения</div>
+                    </div>
+
+                    <p>Единая цифровая платформа обеспечит хранение медицинских карт всех граждан в защищенном облачном хранилище. Пациенты получат доступ к своим данным через мобильное приложение, смогут записываться к врачам онлайн и получать электронные рецепты.</p>
+
+                    <p>Программа также предусматривает повышение зарплат медицинским работникам на 30% и улучшение условий труда.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Дмитрий Сидоров, обозреватель</span>
+                <span class="modal-date">1 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Удаленная работа становится нормой</h2>
+                <button class="modal-close" data-close="modal3">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" alt="Remote Work" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 1 мая 2026 года.</strong> По данным последнего исследования Института труда, более 60% компаний перешли на гибридный формат работы. Это фундаментально меняет рынок труда и городскую среду.</p>
+                    
+                    <p>Основные тренды:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Гибридный график (2-3 дня в офисе, остальное время удаленно)</li>
+                        <li>Полностью распределенные команды</li>
+                        <li>Глобальный найм без географических ограничений</li>
+                        <li>Новые инструменты коллаборации на базе VR и AR</li>
+                        <li>Пересмотр корпоративной культуры</li>
+                    </ul>
+
+                    <p>Эксперты отмечают изменение подхода к организации труда. Если раньше присутствие в офисе считалось обязательным, то теперь результат работы важнее места ее выполнения. Компании экономят на аренде офисных помещений, а сотрудники — на времени и расходах на дорогу.</p>
+
+                    <p>Новые технологии позволяют эффективно работать из любой точки мира. Видеоконференции в виртуальной реальности, совместная работа над документами в реальном времени, AI-ассистенты для планирования встреч — все это стало повседневностью.</p>
+
+                    <div class="quote-block">
+                        "Мы наблюдаем тектонический сдвиг в организации труда. Офис превращается из места работы в место встреч и общения, а основная работа выполняется удаленно."
+                        <div class="quote-author">— Елена Волкова, HR-директор TechCorp</div>
+                    </div>
+
+                    <p>Это меняет рынок недвижимости: спрос на офисные помещения падает, а на жилье в пригородах и небольших городах растет. Люди больше не привязаны к крупным мегаполисам и могут выбирать место жительства исходя из качества жизни, а не близости к работе.</p>
+
+                    <p>Однако есть и вызовы: размытие границ между работой и личной жизнью, необходимость самодисциплины, проблемы с командной работой и корпоративной культурой. Компании активно ищут решения этих проблем.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Алексей Кузнецов, экономический обозреватель</span>
+                <span class="modal-date">1 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Фестиваль цифровой культуры</h2>
+                <button class="modal-close" data-close="modal4">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop" alt="Digital Culture Festival" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 1 мая 2026 года.</strong> В столице открылся крупнейший фестиваль цифровой культуры Digital Art Fest 2026. Мероприятие проходит одновременно на 15 площадках города и продлится две недели.</p>
+                    
+                    <p>Программа фестиваля включает:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Интерактивные инсталляции с использованием AI</li>
+                        <li>VR-экспозиции и иммерсивные шоу</li>
+                        <li>Выставка произведений, созданных нейросетями</li>
+                        <li>Цифровое искусство на блокчейне (NFT)</li>
+                        <li>Мастер-классы по созданию цифрового искусства</li>
+                        <li>Лекции о будущем культуры в цифровую эпоху</li>
+                    </ul>
+
+                    <p>Центральным событием стала выставка "Искусственный интеллект как соавтор", где представлены работы, созданные в коллаборации художников и AI-алгоритмов. Посетители могут сами попробовать создать произведение искусства с помощью нейросетей.</p>
+
+                    <p>VR-зоны позволяют погрузиться в полностью цифровые миры, созданные известными художниками. Технология отслеживания движений и тактильной обратной связи делает опыт максимально реалистичным.</p>
+
+                    <div class="quote-block">
+                        "Цифровые технологии не заменяют традиционное искусство, а открывают новые возможности для творчества. Мы стоим на пороге новой эры в культуре."
+                        <div class="quote-author">— София Морозова, куратор фестиваля</div>
+                    </div>
+
+                    <p>Мероприятие привлекает тысячи посетителей. За первые три дня фестиваль посетило более 50 000 человек. Особый интерес проявляет молодежь, для которой цифровая культура — естественная среда обитания.</p>
+
+                    <p>Фестиваль становится площадкой для дискуссий о будущем культуры: что такое авторство в эпоху AI, как защищать права цифровых художников, где проходит граница между человеком и машиной в творчестве.</p>
+
+                    <p>Вход на большинство мероприятий бесплатный. Расписание и регистрация на сайте фестиваля.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Ольга Новикова, культурный обозреватель</span>
+                <span class="modal-date">1 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">GAZETA Y45</div>
+            <p>Выпуск №1 от 1 мая 2026 года</p>
+            <p>Аналитика. Репортажи. Экспертные оценки.</p>
+            
+            <div class="footer-info">
+                <p>&copy; 2026 Gazeta Y45. Все права защищены.</p>
+                <p>Главный редактор: Редакция Gazeta Y45</p>
+                <p>Дизайн вдохновлен классической журналистикой</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Установка даты
+        const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+        const today = new Date('2026-05-01');
+        document.querySelector('.date-display').textContent = today.toLocaleDateString('ru-RU', dateOptions) + ' г.';
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all buttons with data-modal attribute
+            const openButtons = document.querySelectorAll('[data-modal]');
+            const closeButtons = document.querySelectorAll('[data-close]');
+            const modals = document.querySelectorAll('.modal');
+
+            // Open modal
+            openButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                    }
+                });
+            });
+
+            // Close modal
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-close');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }
+                });
+            });
+
+            // Close modal when clicking outside
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
