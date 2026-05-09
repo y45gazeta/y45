@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архив выпусков — Gazeta Y45</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #666666;
+            --border-color: #dddddd;
+            --light-gray: #f9f9f9;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        h1.logo {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin: 10px 0;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .tagline {
+            font-family: var(--font-sans);
+            color: var(--secondary-text);
+            font-style: italic;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .controls-left {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+        }
+
+        .controls-right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover { background: #333; }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            font-family: var(--font-sans);
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            font-size: 0.9rem;
+        }
+
+        /* Archive Grid */
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .issue-card {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .issue-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .issue-number {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .issue-date {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+        }
+
+        .issue-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .issue-description {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .issue-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .topic-tag {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: var(--light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+
+        .page-info {
+            margin: 0 15px;
+            color: var(--secondary-text);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--light-gray);
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 30px 0;
+            font-family: var(--font-sans);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: #fff; }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1.logo { font-size: 3rem; }
+            .controls { flex-direction: column; align-items: flex-start; }
+            .controls-right { width: 100%; justify-content: space-between; }
+            .archive-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-links { justify-content: center; }
+            .footer-links a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Gazeta Y45</h1>
+            <p class="tagline">Полный архив выпусков • 2020–2026</p>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <div class="controls">
+            <div class="controls-left">
+                <strong>Всего выпусков:</strong> 364
+            </div>
+            <div class="controls-right">
+                <select class="sort-select" id="sortSelect" onchange="sortArchive()">
+                    <option value="newest">Сначала новые</option>
+                    <option value="oldest">Сначала старые</option>
+                    <option value="number">По номеру</option>
+                </select>
+                <button class="btn btn-outline" onclick="goHome()">← На главную</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <span>📅 Период: <strong>янв. 2020 — май 2026</strong></span>
+            <span>🔍 Поиск: <a href="search.html" style="color:var(--accent-color);text-decoration:none;font-weight:500;">расширенный поиск →</a></span>
+        </div>
+
+        <div class="archive-grid" id="archiveGrid">
+            <!-- Выпуски генерируются через JS -->
+        </div>
+
+        <div class="pagination" id="pagination">
+            <!-- Пагинация генерируется через JS -->
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    &copy; 2026 Gazeta Y45. Архив за 2020–2026 гг.
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="#">О газете</a>
+                    <a href="#">Подписка</a>
+                    <a href="#">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Генерация данных архива (демо: 364 выпуска)
+        const totalIssues = 364;
+        const issuesPerPage = 24;
+        let currentPage = 1;
+        let sortMode = 'newest';
+
+        // Генерация массива выпусков
+        function generateIssues() {
+            const issues = [];
+            const topics = ['Политика', 'Экономика', 'Технологии', 'Общество', 'Культура', 'Наука', 'Спорт', 'Мнения'];
+            
+            for (let i = 1; i <= totalIssues; i++) {
+                // Расчёт даты (от мая 2026 назад)
+                const daysAgo = (totalIssues - i) * 7;
+                const date = new Date(2026, 4, 10 - daysAgo);
+                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+                
+                // Случайные темы для превью
+                const issueTopics = [topics[i % topics.length], topics[(i + 3) % topics.length]];
+                
+                issues.push({
+                    number: i,
+                    title: `Выпуск №${i}: ${getIssueTitle(i)}`,
+                    date: dateStr,
+                    dateObj: date,
+                    description: getDescription(i),
+                    topics: issueTopics,
+                    url: `v${String(i).padStart(3, '0')}.html`
+                });
+            }
+            return issues;
+        }
+
+        function getIssueTitle(num) {
+            const titles = [
+                'Квантовые прорывы и новые стандарты',
+                'Цифровая экономика: итоги квартала',
+                'Культурный код: искусство в эпоху ИИ',
+                'Климатический саммит: новые обязательства',
+                'Глобальные вызовы и локальные решения',
+                'Технологии будущего: от идеи к реализации',
+                'Общество в цифровую эпоху',
+                'Наука без границ: международное сотрудничество'
+            ];
+            return titles[num % titles.length];
+        }
+
+        function getDescription(num) {
+            const desc = [
+                'Технологии, наука, международная повестка',
+                'Финансы, регуляции, крипторынок',
+                'Культура, мнения, интервью',
+                'Экология, политика, технологии',
+                'Здоровье, образование, инновации',
+                'Бизнес, стартапы, инвестиции',
+                'Спорт, события, достижения',
+                'Аналитика, прогнозы, экспертные оценки'
+            ];
+            return desc[num % desc.length];
+        }
+
+        const allIssues = generateIssues();
+
+        // Сортировка
+        function sortArchive() {
+            sortMode = document.getElementById('sortSelect').value;
+            currentPage = 1;
+            renderArchive();
+        }
+
+        function getSortedIssues() {
+            const sorted = [...allIssues];
+            if (sortMode === 'newest') {
+                sorted.sort((a, b) => b.dateObj - a.dateObj);
+            } else if (sortMode === 'oldest') {
+                sorted.sort((a, b) => a.dateObj - b.dateObj);
+            } else if (sortMode === 'number') {
+                sorted.sort((a, b) => a.number - b.number);
+            }
+            return sorted;
+        }
+
+        // Рендеринг сетки
+        function renderArchive() {
+            const grid = document.getElementById('archiveGrid');
+            const sorted = getSortedIssues();
+            const start = (currentPage - 1) * issuesPerPage;
+            const pageIssues = sorted.slice(start, start + issuesPerPage);
+
+            grid.innerHTML = pageIssues.map(issue => `
+                <a href="${issue.url}" class="issue-card">
+                    <div class="issue-header">
+                        <span class="issue-number">№ ${issue.number}</span>
+                        <span class="issue-date">${issue.date}</span>
+                    </div>
+                    <h3 class="issue-title">${issue.title}</h3>
+                    <p class="issue-description">${issue.description}</p>
+                    <div class="issue-topics">
+                        ${issue.topics.map(t => `<span class="topic-tag">${t}</span>`).join('')}
+                    </div>
+                </a>
+            `).join('');
+
+            renderPagination(sorted.length);
+        }
+
+        // Пагинация
+        function renderPagination(total) {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(total / issuesPerPage);
+            
+            let html = `
+                <button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Назад</button>
+                <span class="page-info">Стр. ${currentPage} из ${totalPages}</span>
+                <button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Вперёд →</button>
+            `;
+            
+            // Номера страниц (упрощённо)
+            html += '<span style="margin-left:20px">Перейти: </span>';
+            const maxButtons = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons/2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            
+            for (let p = startPage; p <= endPage; p++) {
+                html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="changePage(${p})">${p}</button>`;
+            }
+            
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(totalIssues / issuesPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderArchive();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', renderArchive);
+    </script>
+</body>
+</html>
