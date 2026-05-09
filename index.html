@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Y45</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #444444;
+            --border-color: #dddddd;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 40px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .date-line {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h1.logo {
+            font-size: 4.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin: 20px 0;
+            line-height: 1;
+            font-family: 'Arial Black', 'Impact', sans-serif; /* Более строгий шрифт для названия */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+            text-decoration: underline;
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        /* Hero Article */
+        .hero-article {
+            border-right: 1px solid var(--border-color);
+            padding-right: 40px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) contrast(120%);
+            margin-bottom: 25px;
+        }
+
+        .category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 1px solid var(--accent-color);
+            padding: 2px 8px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-excerpt {
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .author {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Sidebar / Secondary Articles */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .article-card {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .article-card:last-child {
+            border-bottom: none;
+        }
+
+        .article-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .article-card p {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+        }
+
+        .small-img {
+            width: 100%;
+            height: 150px;
+            background-color: #eee;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 40px 0;
+            text-align: center;
+            font-family: var(--font-sans);
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1.logo {
+                font-size: 3rem;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-article {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 4px solid var(--accent-color);
+                padding-bottom: 40px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="date-line">
+                <span id="current-date">Суббота, 02 Мая 2026</span>
+                <span>Выпуск № 45</span>
+                <span>Цена: Бесплатно</span>
+            </div>
+            
+            <h1 class="logo">Gazeta Y45</h1>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Политика</a></li>
+                    <li><a href="#">Технологии</a></li>
+                    <li><a href="#">Кибербезопасность</a></li>
+                    <li><a href="#">Мнения</a></li>
+                    <li><a href="#">Архив</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-grid">
+            <!-- Основная статья -->
+            <article class="hero-article">
+                <div class="hero-image"></div>
+                <span class="category">Технологии</span>
+                <h2 class="hero-title">Новые стандарты шифрования в 2026 году</h2>
+                <p class="hero-excerpt">
+                    Как современные алгоритмы защищают данные пользователей от квантовых вычислений. Обзор новых протоколов безопасности.
+                </p>
+                <p style="margin-bottom: 20px;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+                <span class="author">Автор: Редакция Gazeta Y45</span>
+            </article>
+
+            <!-- Боковая колонка -->
+            <aside class="sidebar">
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2069&auto=format&fit=crop" alt="News" class="small-img">
+                    <span class="category">Мир</span>
+                    <h3>Глобальное соглашение по цифровым валютам подписано</h3>
+                    <p>Страны G20 пришли к единому мнению относительно регулирования криптоактивов.</p>
+                </article>
+
+                <article class="article-card">
+                    <span class="category">Наука</span>
+                    <h3>Новый телескоп отправил первые снимки</h3>
+                    <p>Астрономы в шоке от детализации новых фотографий далеких галактик.</p>
+                </article>
+
+                <article class="article-card">
+                    <span class="category">Культура</span>
+                    <h3>Выставка минимализма открылась в столице</h3>
+                    <p>Черно-белая фотография снова в тренде среди современных художников.</p>
+                </article>
+            </aside>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Gazeta Y45. Все права защищены.</p>
+            <p>Дизайн вдохновлен классической журналистикой.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Скрипт для установки актуальной даты
+        const dateElement = document.getElementById('current-date');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date();
+        
+        // Устанавливаем дату из контекста (2 мая 2026) или текущую
+        // Если нужно жестко задать дату:
+        // dateElement.textContent = "Суббота, 02 Мая 2026";
+        
+        // Иначе используем реальную дату системы:
+        dateElement.textContent = today.toLocaleDateString('ru-RU', options);
+    </script>
+</body>
+</html>
