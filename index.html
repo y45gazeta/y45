@@ -141,6 +141,8 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
@@ -163,42 +165,62 @@
             color: var(--bg-color);
         }
 
-        /* Quick Links */
-        .quick-links {
+        /* All Issues Button */
+        .all-issues-section {
             margin: 50px 0;
         }
 
-        .quick-links h3 {
-            font-family: var(--font-sans);
-            font-size: 1rem;
+        .btn-large {
+            padding: 18px 60px;
+            font-size: 1.1rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-        }
-
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .quick-link {
-            padding: 12px 20px;
-            border: 1px solid var(--border-color);
-            text-decoration: none;
-            color: var(--text-color);
-            font-family: var(--font-sans);
-            font-weight: 500;
-            transition: all 0.3s;
-            background: var(--light-gray);
-        }
-
-        .quick-link:hover {
-            border-color: var(--accent-color);
-            background: var(--accent-color);
+            letter-spacing: 3px;
+            background-color: var(--accent-color);
             color: var(--bg-color);
+            border: 3px solid var(--accent-color);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-large:hover {
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Search */
+        .search-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            min-width: 250px;
+            max-width: 400px;
+            flex: 1;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
 
         /* Recent Issues */
@@ -267,37 +289,6 @@
             line-height: 1.4;
         }
 
-        /* Search */
-        .search-section {
-            margin: 40px 0;
-            padding: 30px;
-            background: var(--light-gray);
-            border-radius: 4px;
-        }
-
-        .search-form {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-family: var(--font-sans);
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            min-width: 250px;
-            max-width: 400px;
-            flex: 1;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
         /* Footer */
         footer {
             background-color: var(--accent-color);
@@ -339,32 +330,11 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1.logo {
-                font-size: 3.5rem;
-            }
-
-            .issue-selector {
-                flex-direction: column;
-            }
-
-            .issue-input {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-links {
-                justify-content: center;
-            }
+            h1.logo { font-size: 3.5rem; }
+            .issue-selector { flex-direction: column; }
+            .issue-input, .btn { width: 100%; max-width: 200px; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-links { justify-content: center; }
         }
 
         /* Animation */
@@ -372,11 +342,7 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .issue-card {
-            animation: fadeIn 0.4s ease forwards;
-        }
-
+        .issue-card { animation: fadeIn 0.4s ease forwards; }
         .issue-card:nth-child(1) { animation-delay: 0.1s; }
         .issue-card:nth-child(2) { animation-delay: 0.2s; }
         .issue-card:nth-child(3) { animation-delay: 0.3s; }
@@ -396,10 +362,9 @@
         
         <section class="intro">
             <h2>Выберите выпуск</h2>
-            <p>Введите номер выпуска или выберите из последних опубликованных материалов</p>
+            <p>Введите номер выпуска или откройте полный архив материалов</p>
         </section>
 
-        <!-- Issue Selector -->
         <!-- Issue Selector -->
         <section class="selector-section">
             <span class="selector-label">Номер выпуска</span>
@@ -410,7 +375,6 @@
                     class="issue-input" 
                     placeholder="1" 
                     min="1" 
-                    max="999"
                     onkeypress="if(event.key==='Enter') goToIssue()"
                 >
                 <button class="btn" onclick="goToIssue()">Открыть</button>
@@ -426,49 +390,41 @@
             </form>
         </section>
 
-        <!-- Quick Links -->
-        <section class="quick-links">
-            <h3>Быстрый переход</h3>
-            <div class="links-grid">
-                <a href="v364.html" class="quick-link">№ 364</a>
-                <a href="v363.html" class="quick-link">№ 363</a>
-                <a href="v362.html" class="quick-link">№ 362</a>
-                <a href="v361.html" class="quick-link">№ 361</a>
-                <a href="v360.html" class="quick-link">№ 360</a>
-                <a href="archive.html" class="quick-link">Все выпуски</a>
-            </div>
+        <!-- All Issues Button -->
+        <section class="all-issues-section">
+            <a href="archive.html" class="btn-large">Все выпуски</a>
         </section>
 
         <!-- Recent Issues -->
         <section class="recent-section">
             <h3>Последние выпуски</h3>
             <div class="issues-list">
-                <a href="v364.html" class="issue-card">
-                    <div class="issue-number">Выпуск № 364</div>
-                    <div class="issue-title">Квантовые прорывы и новые стандарты</div>
+                <a href="v010.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 10</div>
+                    <div class="issue-title">Искусственный интеллект в медицине</div>
                     <div class="issue-date">10 мая 2026</div>
-                    <div class="issue-preview">Технологии, наука, международная повестка</div>
+                    <div class="issue-preview">Технологии, наука, общество</div>
                 </a>
                 
-                <a href="v363.html" class="issue-card">
-                    <div class="issue-number">Выпуск № 363</div>
-                    <div class="issue-title">Цифровая экономика: итоги квартала</div>
-                    <div class="issue-date">3 мая 2026</div>
-                    <div class="issue-preview">Финансы, регуляции, крипторынок</div>
+                <a href="v009.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 9</div>
+                    <div class="issue-title">Климатические обязательства G20</div>
+                    <div class="issue-date">9 мая 2026</div>
+                    <div class="issue-preview">Экология, политика, аналитика</div>
                 </a>
                 
-                <a href="v362.html" class="issue-card">
-                    <div class="issue-number">Выпуск № 362</div>
-                    <div class="issue-title">Культурный код: искусство в эпоху ИИ</div>
-                    <div class="issue-date">26 апреля 2026</div>
-                    <div class="issue-preview">Культура, мнения, интервью</div>
+                <a href="v008.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 8</div>
+                    <div class="issue-title">Венецианская биеннале 2026: итоги</div>
+                    <div class="issue-date">8 мая 2026</div>
+                    <div class="issue-preview">Культура, искусство, репортажи</div>
                 </a>
                 
-                <a href="v361.html" class="issue-card">
-                    <div class="issue-number">Выпуск № 361</div>
-                    <div class="issue-title">Климатический саммит: новые обязательства</div>
-                    <div class="issue-date">19 апреля 2026</div>
-                    <div class="issue-preview">Экология, политика, технологии</div>
+                <a href="v007.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 7</div>
+                    <div class="issue-title">Прорыв в лечении болезни Альцгеймера</div>
+                    <div class="issue-date">7 мая 2026</div>
+                    <div class="issue-preview">Здоровье, наука, интервью</div>
                 </a>
             </div>
         </section>
@@ -498,18 +454,17 @@
             const input = document.getElementById('issueNumber');
             const issueNum = input.value.trim();
             
-            if (issueNum && issueNum >= 1 && issueNum <= 999) {
-                // Форматируем номер с ведущими нулями при необходимости
+            if (issueNum && issueNum >= 1) {
                 const paddedNum = issueNum.padStart(3, '0');
                 window.location.href = `v${paddedNum}.html`;
             } else {
-                alert('Введите корректный номер выпуска (1–999)');
+                alert('Введите корректный номер выпуска');
             }
         }
 
         // Переход к последнему выпуску
         function goToLatest() {
-            window.location.href = 'v364.html';
+            window.location.href = 'v010.html';
         }
 
         // Поиск по архиву (заглушка)
@@ -525,7 +480,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const input = document.getElementById('issueNumber');
             input.addEventListener('input', (e) => {
-                // Ограничиваем ввод только цифрами
                 e.target.value = e.target.value.replace(/[^0-9]/g, '');
             });
         });
