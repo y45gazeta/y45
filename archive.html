@@ -68,16 +68,9 @@
             gap: 15px;
         }
 
-        .controls-left {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-        }
+        .controls-left { font-family: var(--font-sans); font-size: 0.9rem; }
 
-        .controls-right {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .controls-right { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .btn {
             padding: 10px 20px;
@@ -101,10 +94,7 @@
             color: var(--text-color);
         }
 
-        .btn-outline:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
-        }
+        .btn-outline:hover { background: var(--accent-color); color: var(--bg-color); }
 
         .sort-select {
             padding: 10px 15px;
@@ -178,11 +168,7 @@
             flex: 1;
         }
 
-        .issue-topics {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
+        .issue-topics { display: flex; flex-wrap: wrap; gap: 8px; }
 
         .topic-tag {
             font-family: var(--font-sans);
@@ -190,7 +176,6 @@
             padding: 4px 10px;
             background: var(--light-gray);
             border: 1px solid var(--border-color);
-            border-radius: 2px;
         }
 
         /* Pagination */
@@ -213,17 +198,13 @@
             transition: all 0.3s;
         }
 
-        .page-btn:hover,
-        .page-btn.active {
+        .page-btn:hover, .page-btn.active {
             background: var(--accent-color);
             color: var(--bg-color);
             border-color: var(--accent-color);
         }
 
-        .page-info {
-            margin: 0 15px;
-            color: var(--secondary-text);
-        }
+        .page-info { margin: 0 15px; color: var(--secondary-text); }
 
         /* Stats Bar */
         .stats-bar {
@@ -265,10 +246,7 @@
 
         .footer-links a:hover { color: #fff; }
 
-        .copyright {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
-        }
+        .copyright { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -287,7 +265,7 @@
     <header>
         <div class="container">
             <h1 class="logo">Gazeta Y45</h1>
-            <p class="tagline">Полный архив выпусков • 2020–2026</p>
+            <p class="tagline">Архив выпусков • Старт: 1 мая 2026</p>
         </div>
     </header>
 
@@ -295,7 +273,7 @@
         
         <div class="controls">
             <div class="controls-left">
-                <strong>Всего выпусков:</strong> 364
+                <strong>Всего выпусков:</strong> <span id="total-count">10</span>
             </div>
             <div class="controls-right">
                 <select class="sort-select" id="sortSelect" onchange="sortArchive()">
@@ -308,17 +286,13 @@
         </div>
 
         <div class="stats-bar">
-            <span>📅 Период: <strong>янв. 2020 — май 2026</strong></span>
+            <span>📅 Период: <strong>1 мая – 10 мая 2026</strong></span>
             <span>🔍 Поиск: <a href="search.html" style="color:var(--accent-color);text-decoration:none;font-weight:500;">расширенный поиск →</a></span>
         </div>
 
-        <div class="archive-grid" id="archiveGrid">
-            <!-- Выпуски генерируются через JS -->
-        </div>
+        <div class="archive-grid" id="archiveGrid"></div>
 
-        <div class="pagination" id="pagination">
-            <!-- Пагинация генерируется через JS -->
-        </div>
+        <div class="pagination" id="pagination"></div>
 
     </main>
 
@@ -326,7 +300,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="copyright">
-                    &copy; 2026 Gazeta Y45. Архив за 2020–2026 гг.
+                    &copy; 2026 Gazeta Y45. Архив с 1 мая 2026 г.
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Главная</a>
@@ -339,70 +313,50 @@
     </footer>
 
     <script>
-        // Генерация данных архива (демо: 364 выпуска)
-        const totalIssues = 364;
-        const issuesPerPage = 24;
+        // === КОНФИГУРАЦИЯ АРХИВА ===
+        const totalIssues = 10; // Выпуски №1–№10 (1–10 мая 2026)
+        const startDate = new Date(2026, 4, 1); // 1 мая 2026
+        const issuesPerPage = 12;
         let currentPage = 1;
         let sortMode = 'newest';
 
-        // Генерация массива выпусков
         function generateIssues() {
             const issues = [];
-            const topics = ['Политика', 'Экономика', 'Технологии', 'Общество', 'Культура', 'Наука', 'Спорт', 'Мнения'];
-            
+            const topics = ['Политика', 'Экономика', 'Технологии', 'Общество', 'Культура', 'Наука'];
+            const titles = [
+                'Новые стандарты шифрования в 2026 году',
+                'Глобальное соглашение по цифровым валютам',
+                'Квантовые компьютеры вышли на новый уровень',
+                'Запуск новой орбитальной станции',
+                'Цифровой рубль: пилотный запуск',
+                'Саммит по ИИ в Женеве',
+                'Прорыв в лечении болезни Альцгеймера',
+                'Венецианская биеннале 2026: итоги',
+                'Климатические обязательства G20',
+                'Искусственный интеллект в медицине'
+            ];
+
             for (let i = 1; i <= totalIssues; i++) {
-                // Расчёт даты (от мая 2026 назад)
-                const daysAgo = (totalIssues - i) * 7;
-                const date = new Date(2026, 4, 10 - daysAgo);
-                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
-                
-                // Случайные темы для превью
-                const issueTopics = [topics[i % topics.length], topics[(i + 3) % topics.length]];
+                // Расчёт даты: 1 мая + (номер выпуска - 1) дней
+                const date = new Date(startDate.getTime() + (i - 1) * 24 * 60 * 60 * 1000);
+                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+                const paddedNum = String(i).padStart(3, '0');
                 
                 issues.push({
                     number: i,
-                    title: `Выпуск №${i}: ${getIssueTitle(i)}`,
+                    title: `Выпуск №${i}: ${titles[i-1] || 'Ежедневный обзор событий'}`,
                     date: dateStr,
                     dateObj: date,
-                    description: getDescription(i),
-                    topics: issueTopics,
-                    url: `v${String(i).padStart(3, '0')}.html`
+                    description: `Главные новости за ${dateStr.toLowerCase()}. Аналитика, репортажи и экспертные оценки.`,
+                    topics: [topics[(i-1) % topics.length], topics[(i+2) % topics.length]],
+                    url: `v${paddedNum}.html`
                 });
             }
             return issues;
         }
 
-        function getIssueTitle(num) {
-            const titles = [
-                'Квантовые прорывы и новые стандарты',
-                'Цифровая экономика: итоги квартала',
-                'Культурный код: искусство в эпоху ИИ',
-                'Климатический саммит: новые обязательства',
-                'Глобальные вызовы и локальные решения',
-                'Технологии будущего: от идеи к реализации',
-                'Общество в цифровую эпоху',
-                'Наука без границ: международное сотрудничество'
-            ];
-            return titles[num % titles.length];
-        }
-
-        function getDescription(num) {
-            const desc = [
-                'Технологии, наука, международная повестка',
-                'Финансы, регуляции, крипторынок',
-                'Культура, мнения, интервью',
-                'Экология, политика, технологии',
-                'Здоровье, образование, инновации',
-                'Бизнес, стартапы, инвестиции',
-                'Спорт, события, достижения',
-                'Аналитика, прогнозы, экспертные оценки'
-            ];
-            return desc[num % desc.length];
-        }
-
         const allIssues = generateIssues();
 
-        // Сортировка
         function sortArchive() {
             sortMode = document.getElementById('sortSelect').value;
             currentPage = 1;
@@ -411,17 +365,12 @@
 
         function getSortedIssues() {
             const sorted = [...allIssues];
-            if (sortMode === 'newest') {
-                sorted.sort((a, b) => b.dateObj - a.dateObj);
-            } else if (sortMode === 'oldest') {
-                sorted.sort((a, b) => a.dateObj - b.dateObj);
-            } else if (sortMode === 'number') {
-                sorted.sort((a, b) => a.number - b.number);
-            }
+            if (sortMode === 'newest') sorted.sort((a, b) => b.dateObj - a.dateObj);
+            else if (sortMode === 'oldest') sorted.sort((a, b) => a.dateObj - b.dateObj);
+            else sorted.sort((a, b) => a.number - b.number);
             return sorted;
         }
 
-        // Рендеринг сетки
         function renderArchive() {
             const grid = document.getElementById('archiveGrid');
             const sorted = getSortedIssues();
@@ -445,7 +394,6 @@
             renderPagination(sorted.length);
         }
 
-        // Пагинация
         function renderPagination(total) {
             const pagination = document.getElementById('pagination');
             const totalPages = Math.ceil(total / issuesPerPage);
@@ -455,16 +403,6 @@
                 <span class="page-info">Стр. ${currentPage} из ${totalPages}</span>
                 <button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Вперёд →</button>
             `;
-            
-            // Номера страниц (упрощённо)
-            html += '<span style="margin-left:20px">Перейти: </span>';
-            const maxButtons = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxButtons/2));
-            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
-            
-            for (let p = startPage; p <= endPage; p++) {
-                html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="changePage(${p})">${p}</button>`;
-            }
             
             pagination.innerHTML = html;
         }
@@ -482,7 +420,6 @@
             window.location.href = 'index.html';
         }
 
-        // Инициализация
         document.addEventListener('DOMContentLoaded', renderArchive);
     </script>
 </body>
