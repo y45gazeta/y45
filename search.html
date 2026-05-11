@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск по архиву — Gazeta Y45</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #666666;
+            --border-color: #dddddd;
+            --light-gray: #f9f9f9;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        h1.logo {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin: 10px 0;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .tagline {
+            font-family: var(--font-sans);
+            color: var(--secondary-text);
+            font-style: italic;
+        }
+
+        /* Search Header */
+        .search-header {
+            padding: 40px 0 30px;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        .search-header h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .search-form-large {
+            display: flex;
+            gap: 10px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-input-large {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: var(--font-sans);
+            border: 2px solid var(--accent-color);
+            background: var(--bg-color);
+        }
+
+        .search-input-large:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+        }
+
+        .btn-search {
+            padding: 15px 35px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-search:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary-text);
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            font-family: var(--font-sans);
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .results-count {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+        }
+
+        .results-count strong {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .result-card {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-number {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-date {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .result-excerpt {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .result-match {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        .result-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .topic-tag {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: var(--light-gray);
+            border: 1px solid var(--border-color);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            display: none;
+        }
+
+        .no-results.active {
+            display: block;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .no-results p {
+            color: var(--secondary-text);
+            font-family: var(--font-sans);
+            max-width: 500px;
+            margin: 0 auto 25px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 30px 0;
+            font-family: var(--font-sans);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: #fff; }
+
+        .copyright {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1.logo { font-size: 3rem; }
+            .search-form-large { flex-direction: column; }
+            .filters { flex-direction: column; align-items: flex-start; }
+            .results-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-links { justify-content: center; }
+            .footer-links a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">Gazeta Y45</h1>
+            <p class="tagline">Поиск по архиву</p>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="search-header">
+            <h2>Поиск по архиву</h2>
+            <form class="search-form-large" onsubmit="performSearch(event)">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input-large" 
+                    placeholder="Введите ключевые слова (тема, дата, автор)..."
+                    autocomplete="off"
+                >
+                <button type="submit" class="btn-search">Найти</button>
+            </form>
+        </section>
+
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Сортировка:</span>
+                <select class="filter-select" id="sortFilter" onchange="applyFilters()">
+                    <option value="relevance">По релевантности</option>
+                    <option value="newest">Сначала новые</option>
+                    <option value="oldest">Сначала старые</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Категория:</span>
+                <select class="filter-select" id="categoryFilter" onchange="applyFilters()">
+                    <option value="all">Все категории</option>
+                    <option value="Технологии">Технологии</option>
+                    <option value="Наука">Наука</option>
+                    <option value="Политика">Политика</option>
+                    <option value="Экономика">Экономика</option>
+                    <option value="Общество">Общество</option>
+                    <option value="Культура">Культура</option>
+                </select>
+            </div>
+            <div class="results-count" id="resultsCount">
+                Найдено: <strong>0</strong> выпусков
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Поиск по архиву...</p>
+        </div>
+
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon">🔍</div>
+            <h3>Ничего не найдено</h3>
+            <p>По вашему запросу не найдено совпадений. Попробуйте изменить поисковый запрос или выбрать другие фильтры.</p>
+            <a href="archive.html" class="btn-back">Перейти в архив</a>
+        </div>
+
+        <div class="results-grid" id="resultsGrid"></div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">&copy; 2026 Gazeta Y45. Архив с 1 мая 2026 г.</div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="archive.html">Архив</a>
+                    <a href="#">О газете</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные архива (те же, что в archive.html)
+        const ARCHIVE_DATA = [
+            { num: 1, date: '1 мая 2026', title: 'Новые стандарты шифрования в 2026 году', desc: 'Технологии, наука, международная повестка', topics: ['Технологии', 'Наука'] },
+            { num: 2, date: '2 мая 2026', title: 'Глобальное соглашение по цифровым валютам', desc: 'Финансы, регуляции, крипторынок', topics: ['Экономика', 'Политика'] },
+            { num: 3, date: '3 мая 2026', title: 'Квантовые компьютеры вышли на новый уровень', desc: 'Наука, прорывы, аналитика', topics: ['Наука', 'Технологии'] },
+            { num: 4, date: '4 мая 2026', title: 'Запуск новой орбитальной станции', desc: 'Космос, технологии, будущее', topics: ['Космос', 'Инновации'] },
+            { num: 5, date: '5 мая 2026', title: 'Цифровой рубль: пилотный запуск', desc: 'Финансы, ЦБ, цифровизация', topics: ['Финансы', 'Общество'] },
+            { num: 6, date: '6 мая 2026', title: 'Саммит по ИИ в Женеве', desc: 'Политика, регулирование ИИ', topics: ['Политика', 'Технологии'] },
+            { num: 7, date: '7 мая 2026', title: 'Прорыв в лечении болезни Альцгеймера', desc: 'Здоровье, медицина, наука', topics: ['Здоровье', 'Наука'] },
+            { num: 8, date: '8 мая 2026', title: 'Венецианская биеннале 2026: итоги', desc: 'Культура, искусство, репортажи', topics: ['Культура', 'Искусство'] },
+            { num: 9, date: '9 мая 2026', title: 'Климатические обязательства G20', desc: 'Экология, глобальная повестка', topics: ['Экология', 'Политика'] },
+            { num: 10, date: '10 мая 2026', title: 'Искусственный интеллект в медицине', desc: 'Технологии, наука, общество', topics: ['Технологии', 'Медицина'] },
+            { num: 11, date: '17 мая 2026', title: 'Цифровое образование: школы будущего', desc: 'Технологии, наука, общество', topics: ['Технологии', 'Общество'] }
+        ];
+
+        let currentQuery = '';
+        let currentResults = [];
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            
+            if (query) {
+                document.getElementById('searchInput').value = query;
+                performSearch(null, query);
+            }
+        });
+
+        // Выполнение поиска
+        function performSearch(event, query = null) {
+            if (event) event.preventDefault();
+            
+            const searchTerm = query || document.getElementById('searchInput').value.trim();
+            
+            if (!searchTerm) {
+                alert('Введите поисковый запрос');
+                return;
+            }
+
+            currentQuery = searchTerm;
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('resultsGrid').innerHTML = '';
+            document.getElementById('noResults').classList.remove('active');
+
+            // Имитация задержки поиска
+            setTimeout(() => {
+                searchInArchive(searchTerm);
+                document.getElementById('loading').classList.remove('active');
+            }, 300);
+        }
+
+        // Поиск в архиве
+        function searchInArchive(query) {
+            const lowerQuery = query.toLowerCase();
+            
+            currentResults = ARCHIVE_DATA.filter(issue => {
+                const searchText = `${issue.title} ${issue.desc} ${issue.topics.join(' ')}`.toLowerCase();
+                return searchText.includes(lowerQuery);
+            });
+
+            applyFilters();
+        }
+
+        // Применение фильтров
+        function applyFilters() {
+            const sortBy = document.getElementById('sortFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+
+            let filtered = [...currentResults];
+
+            // Фильтр по категории
+            if (category !== 'all') {
+                filtered = filtered.filter(issue => 
+                    issue.topics.includes(category)
+                );
+            }
+
+            // Сортировка
+            if (sortBy === 'newest') {
+                filtered.sort((a, b) => b.num - a.num);
+            } else if (sortBy === 'oldest') {
+                filtered.sort((a, b) => a.num - b.num);
+            } else if (sortBy === 'relevance') {
+                // Простая сортировка по релевантности (по совпадению в заголовке)
+                const lowerQuery = currentQuery.toLowerCase();
+                filtered.sort((a, b) => {
+                    const aInTitle = a.title.toLowerCase().includes(lowerQuery) ? 1 : 0;
+                    const bInTitle = b.title.toLowerCase().includes(lowerQuery) ? 1 : 0;
+                    return bInTitle - aInTitle;
+                });
+            }
+
+            displayResults(filtered);
+        }
+
+        // Отображение результатов
+        function displayResults(results) {
+            const grid = document.getElementById('resultsGrid');
+            const countEl = document.getElementById('resultsCount');
+            const noResultsEl = document.getElementById('noResults');
+
+            countEl.innerHTML = `Найдено: <strong>${results.length}</strong> выпуск${getResultWord(results.length)}`;
+
+            if (results.length === 0) {
+                grid.innerHTML = '';
+                noResultsEl.classList.add('active');
+                return;
+            }
+
+            noResultsEl.classList.remove('active');
+
+            grid.innerHTML = results.map(issue => {
+                const highlightedTitle = highlightMatch(issue.title, currentQuery);
+                const highlightedDesc = highlightMatch(issue.desc, currentQuery);
+
+                return `
+                    <a href="v${String(issue.num).padStart(3, '0')}.html" class="result-card">
+                        <div class="result-header">
+                            <span class="result-number">№ ${issue.num}</span>
+                            <span class="result-date">${issue.date}</span>
+                        </div>
+                        <h3 class="result-title">${highlightedTitle}</h3>
+                        <p class="result-excerpt">${highlightedDesc}</p>
+                        <div class="result-topics">
+                            ${issue.topics.map(t => `<span class="topic-tag">${t}</span>`).join('')}
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // Подсветка совпадений
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="result-match">$1</span>');
+        }
+
+        // Склонение слова "выпуск"
+        function getResultWord(count) {
+            if (count % 10 === 1 && count % 100 !== 11) return ' выпуск';
+            if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return ' выпуска';
+            return ' выпусков';
+        }
+
+        // Обновление URL при поиске
+        function updateURL(query) {
+            const url = new URL(window.location);
+            if (query) {
+                url.searchParams.set('q', query);
+            } else {
+                url.searchParams.delete('q');
+            }
+            window.history.pushState({}, '', url);
+        }
+    </script>
+</body>
+</html>
