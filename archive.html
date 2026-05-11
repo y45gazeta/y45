@@ -23,13 +23,13 @@
             color: var(--text-color);
             font-family: var(--font-serif);
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: 0vh;
             display: flex;
             flex-direction: column;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 10px;
             margin: 0 auto;
             padding: 0 20px;
             flex: 1;
@@ -46,7 +46,7 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -2px;
-            margin: 10px 0;
+            margin: px 0;
             font-family: 'Arial Black', sans-serif;
         }
 
@@ -70,10 +70,10 @@
 
         .controls-left { font-family: var(--font-sans); font-size: 0.9rem; }
 
-        .controls-right { display: flex; gap: 10px; flex-wrap: wrap; }
+        .controls-right { display: flex; gap: px; flex-wrap: wrap; }
 
         .btn {
-            padding: 10px 20px;
+            padding: px 20px;
             font-family: var(--font-sans);
             font-size: 0.9rem;
             font-weight: 500;
@@ -97,7 +97,7 @@
         .btn-outline:hover { background: var(--accent-color); color: var(--bg-color); }
 
         .sort-select {
-            padding: 10px 15px;
+            padding: px 15px;
             font-family: var(--font-sans);
             border: 1px solid var(--border-color);
             background: var(--bg-color);
@@ -173,7 +173,7 @@
         .topic-tag {
             font-family: var(--font-sans);
             font-size: 0.75rem;
-            padding: 4px 10px;
+            padding: 4px px;
             background: var(--light-gray);
             border: 1px solid var(--border-color);
         }
@@ -183,7 +183,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: px;
             padding: 30px 0;
             border-top: 1px solid var(--border-color);
             margin-top: 20px;
@@ -216,7 +216,7 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: px;
         }
 
         /* Footer */
@@ -252,11 +252,11 @@
         @media (max-width: 768px) {
             h1.logo { font-size: 3rem; }
             .controls { flex-direction: column; align-items: flex-start; }
-            .controls-right { width: 100%; justify-content: space-between; }
+            .controls-right { width: 0%; justify-content: space-between; }
             .archive-grid { grid-template-columns: 1fr; }
             .footer-content { flex-direction: column; text-align: center; }
             .footer-links { justify-content: center; }
-            .footer-links a { margin: 0 10px; }
+            .footer-links a { margin: 0 px; }
         }
     </style>
 </head>
@@ -273,7 +273,7 @@
         
         <div class="controls">
             <div class="controls-left">
-                <strong>Всего выпусков:</strong> <span id="total-count">10</span>
+                <strong>Всего выпусков:</strong> <span id="total-count"></span>
             </div>
             <div class="controls-right">
                 <select class="sort-select" id="sortSelect" onchange="sortArchive()">
@@ -286,7 +286,7 @@
         </div>
 
         <div class="stats-bar">
-            <span>📅 Период: <strong>1 мая – 10 мая 2026</strong></span>
+            <span>📅 Период: <strong>1 мая – 11 мая 2026</strong></span>
             <span>🔍 Поиск: <a href="search.html" style="color:var(--accent-color);text-decoration:none;font-weight:500;">расширенный поиск →</a></span>
         </div>
 
@@ -314,7 +314,7 @@
 
     <script>
         // === КОНФИГУРАЦИЯ АРХИВА ===
-        const totalIssues = 10; // Выпуски №1–№10 (1–10 мая 2026)
+        const totalIssues = 11; // Выпуски №1–№11 (1–11 мая 2026)
         const startDate = new Date(2026, 4, 1); // 1 мая 2026
         const issuesPerPage = 12;
         let currentPage = 1;
