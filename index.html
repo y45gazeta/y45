@@ -27,13 +27,13 @@
             color: var(--text-color);
             font-family: var(--font-serif);
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: 0vh;
             display: flex;
             flex-direction: column;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 00px;
             margin: 0 auto;
             padding: 0 20px;
             flex: 1;
@@ -51,7 +51,7 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -3px;
-            margin: 10px 0;
+            margin: px 0;
             line-height: 1;
             font-family: 'Arial Black', sans-serif;
         }
@@ -203,7 +203,7 @@
         .search-form {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: px;
             flex-wrap: wrap;
         }
 
@@ -256,7 +256,7 @@
         .issue-card:hover {
             border-color: var(--accent-color);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 px 30px rgba(0,0,0,0.1);
         }
 
         .issue-number {
@@ -271,7 +271,7 @@
         .issue-title {
             font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: px;
             line-height: 1.2;
         }
 
@@ -332,7 +332,7 @@
         @media (max-width: 768px) {
             h1.logo { font-size: 3.5rem; }
             .issue-selector { flex-direction: column; }
-            .issue-input, .btn { width: 100%; max-width: 200px; }
+            .issue-input, .btn { width: 0%; max-width: 200px; }
             .footer-content { flex-direction: column; text-align: center; }
             .footer-links { justify-content: center; }
         }
@@ -399,6 +399,13 @@
         <section class="recent-section">
             <h3>Последние выпуски</h3>
             <div class="issues-list">
+                <a href="v011.html" class="issue-card">
+                    <div class="issue-number">Выпуск № 11</div>
+                    <div class="issue-title">Цифровое образование: школы будущего</div>
+                    <div class="issue-date">11 мая 2026</div>
+                    <div class="issue-preview">Технологии, наука, общество</div>
+                </a>
+                
                 <a href="v010.html" class="issue-card">
                     <div class="issue-number">Выпуск № 10</div>
                     <div class="issue-title">Искусственный интеллект в медицине</div>
@@ -418,13 +425,6 @@
                     <div class="issue-title">Венецианская биеннале 2026: итоги</div>
                     <div class="issue-date">8 мая 2026</div>
                     <div class="issue-preview">Культура, искусство, репортажи</div>
-                </a>
-                
-                <a href="v007.html" class="issue-card">
-                    <div class="issue-number">Выпуск № 7</div>
-                    <div class="issue-title">Прорыв в лечении болезни Альцгеймера</div>
-                    <div class="issue-date">7 мая 2026</div>
-                    <div class="issue-preview">Здоровье, наука, интервью</div>
                 </a>
             </div>
         </section>
