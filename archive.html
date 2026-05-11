@@ -6,275 +6,59 @@
     <title>Архив выпусков — Gazeta Y45</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #111111;
-            --accent-color: #000000;
-            --secondary-text: #666666;
-            --border-color: #dddddd;
-            --light-gray: #f9f9f9;
+            --bg-color: #ffffff; --text-color: #111111; --accent-color: #000000;
+            --secondary-text: #666666; --border-color: #dddddd; --light-gray: #f9f9f9;
             --font-serif: 'Georgia', 'Times New Roman', Times, serif;
             --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-serif);
-            line-height: 1.6;
-            min-height: 0vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 10px;
-            margin: 0 auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-
-        header {
-            border-bottom: 4px solid var(--accent-color);
-            padding: 30px 0;
-            text-align: center;
-        }
-
-        h1.logo {
-            font-size: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            margin: px 0;
-            font-family: 'Arial Black', sans-serif;
-        }
-
-        .tagline {
-            font-family: var(--font-sans);
-            color: var(--secondary-text);
-            font-style: italic;
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; flex: 1; }
+        header { border-bottom: 4px solid var(--accent-color); padding: 30px 0; text-align: center; }
+        h1.logo { font-size: 4rem; font-weight: 900; text-transform: uppercase; letter-spacing: -2px; margin: 10px 0; font-family: 'Arial Black', sans-serif; }
+        .tagline { font-family: var(--font-sans); color: var(--secondary-text); font-style: italic; }
+        .controls { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
         .controls-left { font-family: var(--font-sans); font-size: 0.9rem; }
-
-        .controls-right { display: flex; gap: px; flex-wrap: wrap; }
-
-        .btn {
-            padding: px 20px;
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 500;
-            background: var(--accent-color);
-            color: var(--bg-color);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        .controls-right { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 500; background: var(--accent-color); color: var(--bg-color); border: none; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn:hover { background: #333; }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--accent-color);
-            color: var(--text-color);
-        }
-
+        .btn-outline { background: transparent; border: 2px solid var(--accent-color); color: var(--text-color); }
         .btn-outline:hover { background: var(--accent-color); color: var(--bg-color); }
-
-        .sort-select {
-            padding: px 15px;
-            font-family: var(--font-sans);
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            font-size: 0.9rem;
-        }
-
-        /* Archive Grid */
-        .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        .issue-card {
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: all 0.3s;
-            background: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .issue-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
-
-        .issue-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .issue-number {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .issue-date {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            color: var(--secondary-text);
-        }
-
-        .issue-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .issue-description {
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            color: var(--secondary-text);
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
+        .sort-select { padding: 10px 15px; font-family: var(--font-sans); border: 1px solid var(--border-color); background: var(--bg-color); font-size: 0.9rem; }
+        .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .issue-card { border: 1px solid var(--border-color); padding: 25px; text-decoration: none; color: var(--text-color); transition: all 0.3s; background: var(--bg-color); display: flex; flex-direction: column; }
+        .issue-card:hover { border-color: var(--accent-color); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .issue-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .issue-number { font-family: var(--font-sans); font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .issue-date { font-family: var(--font-sans); font-size: 0.85rem; color: var(--secondary-text); }
+        .issue-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+        .issue-description { font-family: var(--font-sans); font-size: 0.95rem; color: var(--secondary-text); line-height: 1.5; margin-bottom: 20px; flex: 1; }
         .issue-topics { display: flex; flex-wrap: wrap; gap: 8px; }
-
-        .topic-tag {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            padding: 4px px;
-            background: var(--light-gray);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: px;
-            padding: 30px 0;
-            border-top: 1px solid var(--border-color);
-            margin-top: 20px;
-            font-family: var(--font-sans);
-        }
-
-        .page-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .page-btn:hover, .page-btn.active {
-            background: var(--accent-color);
-            color: var(--bg-color);
-            border-color: var(--accent-color);
-        }
-
+        .topic-tag { font-family: var(--font-sans); font-size: 0.75rem; padding: 4px 10px; background: var(--light-gray); border: 1px solid var(--border-color); }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 30px 0; border-top: 1px solid var(--border-color); margin-top: 20px; font-family: var(--font-sans); }
+        .page-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: var(--bg-color); cursor: pointer; transition: all 0.3s; }
+        .page-btn:hover, .page-btn.active { background: var(--accent-color); color: var(--bg-color); border-color: var(--accent-color); }
+        .page-btn:disabled { opacity: 0.5; cursor: default; }
         .page-info { margin: 0 15px; color: var(--secondary-text); }
-
-        /* Stats Bar */
-        .stats-bar {
-            background: var(--light-gray);
-            padding: 15px 25px;
-            margin-bottom: 30px;
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--accent-color);
-            color: var(--bg-color);
-            padding: 30px 0;
-            font-family: var(--font-sans);
-            margin-top: auto;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
+        .stats-bar { background: var(--light-gray); padding: 15px 25px; margin-bottom: 30px; font-family: var(--font-sans); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        footer { background: var(--accent-color); color: var(--bg-color); padding: 30px 0; font-family: var(--font-sans); margin-top: auto; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: color 0.3s; }
         .footer-links a:hover { color: #fff; }
-
         .copyright { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1.logo { font-size: 3rem; }
-            .controls { flex-direction: column; align-items: flex-start; }
-            .controls-right { width: 0%; justify-content: space-between; }
-            .archive-grid { grid-template-columns: 1fr; }
-            .footer-content { flex-direction: column; text-align: center; }
-            .footer-links { justify-content: center; }
-            .footer-links a { margin: 0 px; }
-        }
+        @media (max-width: 768px) { h1.logo { font-size: 3rem; } .controls { flex-direction: column; align-items: flex-start; } .controls-right { width: 100%; justify-content: space-between; } .archive-grid { grid-template-columns: 1fr; } .footer-content { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } .footer-links a { margin: 0 10px; } }
     </style>
 </head>
 <body>
-
     <header>
         <div class="container">
             <h1 class="logo">Gazeta Y45</h1>
-            <p class="tagline">Архив выпусков • Старт: 1 мая 2026</p>
+            <p class="tagline">Полный архив выпусков • Старт: 1 мая 2026</p>
         </div>
     </header>
-
     <main class="container">
-        
         <div class="controls">
-            <div class="controls-left">
-                <strong>Всего выпусков:</strong> <span id="total-count"></span>
-            </div>
+            <div class="controls-left"><strong>Всего выпусков:</strong> <span id="total-count">11</span></div>
             <div class="controls-right">
                 <select class="sort-select" id="sortSelect" onchange="sortArchive()">
                     <option value="newest">Сначала новые</option>
@@ -284,78 +68,39 @@
                 <button class="btn btn-outline" onclick="goHome()">← На главную</button>
             </div>
         </div>
-
         <div class="stats-bar">
-            <span>📅 Период: <strong>1 мая – 11 мая 2026</strong></span>
+            <span>📅 Период: <strong>1 мая – 17 мая 2026</strong></span>
             <span>🔍 Поиск: <a href="search.html" style="color:var(--accent-color);text-decoration:none;font-weight:500;">расширенный поиск →</a></span>
         </div>
-
         <div class="archive-grid" id="archiveGrid"></div>
-
         <div class="pagination" id="pagination"></div>
-
     </main>
-
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="copyright">
-                    &copy; 2026 Gazeta Y45. Архив с 1 мая 2026 г.
-                </div>
-                <div class="footer-links">
-                    <a href="index.html">Главная</a>
-                    <a href="#">О газете</a>
-                    <a href="#">Подписка</a>
-                    <a href="#">Контакты</a>
-                </div>
+                <div class="copyright">&copy; 2026 Gazeta Y45. Архив с 1 мая 2026 г.</div>
+                <div class="footer-links"><a href="index.html">Главная</a><a href="#">О газете</a><a href="#">Контакты</a></div>
             </div>
         </div>
     </footer>
-
     <script>
-        // === КОНФИГУРАЦИЯ АРХИВА ===
-        const totalIssues = 11; // Выпуски №1–№11 (1–11 мая 2026)
-        const startDate = new Date(2026, 4, 1); // 1 мая 2026
         const issuesPerPage = 12;
         let currentPage = 1;
         let sortMode = 'newest';
 
-        function generateIssues() {
-            const issues = [];
-            const topics = ['Политика', 'Экономика', 'Технологии', 'Общество', 'Культура', 'Наука'];
-            const titles = [
-                'Новые стандарты шифрования в 2026 году',
-                'Глобальное соглашение по цифровым валютам',
-                'Квантовые компьютеры вышли на новый уровень',
-                'Запуск новой орбитальной станции',
-                'Цифровой рубль: пилотный запуск',
-                'Саммит по ИИ в Женеве',
-                'Прорыв в лечении болезни Альцгеймера',
-                'Венецианская биеннале 2026: итоги',
-                'Климатические обязательства G20',
-                'Искусственный интеллект в медицине'
-            ];
-
-            for (let i = 1; i <= totalIssues; i++) {
-                // Расчёт даты: 1 мая + (номер выпуска - 1) дней
-                const date = new Date(startDate.getTime() + (i - 1) * 24 * 60 * 60 * 1000);
-                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-                const paddedNum = String(i).padStart(3, '0');
-                
-                issues.push({
-                    number: i,
-                    title: `Выпуск №${i}: ${titles[i-1] || 'Ежедневный обзор событий'}`,
-                    date: dateStr,
-                    dateObj: date,
-                    description: `Главные новости за ${dateStr.toLowerCase()}. Аналитика, репортажи и экспертные оценки.`,
-                    topics: [topics[(i-1) % topics.length], topics[(i+2) % topics.length]],
-                    url: `v${paddedNum}.html`
-                });
-            }
-            return issues;
-        }
-
-        const allIssues = generateIssues();
+        const ARCHIVE_DATA = [
+            { num: 1, date: '1 мая 2026', title: 'Новые стандарты шифрования в 2026 году', desc: 'Технологии, наука, международная повестка', topics: ['Технологии', 'Наука'] },
+            { num: 2, date: '2 мая 2026', title: 'Глобальное соглашение по цифровым валютам', desc: 'Финансы, регуляции, крипторынок', topics: ['Экономика', 'Политика'] },
+            { num: 3, date: '3 мая 2026', title: 'Квантовые компьютеры вышли на новый уровень', desc: 'Наука, прорывы, аналитика', topics: ['Наука', 'Технологии'] },
+            { num: 4, date: '4 мая 2026', title: 'Запуск новой орбитальной станции', desc: 'Космос, технологии, будущее', topics: ['Космос', 'Инновации'] },
+            { num: 5, date: '5 мая 2026', title: 'Цифровой рубль: пилотный запуск', desc: 'Финансы, ЦБ, цифровизация', topics: ['Финансы', 'Общество'] },
+            { num: 6, date: '6 мая 2026', title: 'Саммит по ИИ в Женеве', desc: 'Политика, регулирование ИИ', topics: ['Политика', 'Технологии'] },
+            { num: 7, date: '7 мая 2026', title: 'Прорыв в лечении болезни Альцгеймера', desc: 'Здоровье, медицина, наука', topics: ['Здоровье', 'Наука'] },
+            { num: 8, date: '8 мая 2026', title: 'Венецианская биеннале 2026: итоги', desc: 'Культура, искусство, репортажи', topics: ['Культура', 'Искусство'] },
+            { num: 9, date: '9 мая 2026', title: 'Климатические обязательства G20', desc: 'Экология, глобальная повестка', topics: ['Экология', 'Политика'] },
+            { num: 10, date: '10 мая 2026', title: 'Искусственный интеллект в медицине', desc: 'Технологии, наука, общество', topics: ['Технологии', 'Медицина'] },
+            { num: 11, date: '17 мая 2026', title: 'Цифровое образование: школы будущего', desc: 'Технологии, наука, общество', topics: ['Технологии', 'Общество'] }
+        ];
 
         function sortArchive() {
             sortMode = document.getElementById('sortSelect').value;
@@ -364,10 +109,10 @@
         }
 
         function getSortedIssues() {
-            const sorted = [...allIssues];
-            if (sortMode === 'newest') sorted.sort((a, b) => b.dateObj - a.dateObj);
-            else if (sortMode === 'oldest') sorted.sort((a, b) => a.dateObj - b.dateObj);
-            else sorted.sort((a, b) => a.number - b.number);
+            const sorted = [...ARCHIVE_DATA];
+            if (sortMode === 'newest') sorted.sort((a, b) => b.num - a.num);
+            else if (sortMode === 'oldest') sorted.sort((a, b) => a.num - b.num);
+            else sorted.sort((a, b) => a.num - b.num);
             return sorted;
         }
 
@@ -378,13 +123,13 @@
             const pageIssues = sorted.slice(start, start + issuesPerPage);
 
             grid.innerHTML = pageIssues.map(issue => `
-                <a href="${issue.url}" class="issue-card">
+                <a href="v${String(issue.num).padStart(3, '0')}.html" class="issue-card">
                     <div class="issue-header">
-                        <span class="issue-number">№ ${issue.number}</span>
+                        <span class="issue-number">№ ${issue.num}</span>
                         <span class="issue-date">${issue.date}</span>
                     </div>
                     <h3 class="issue-title">${issue.title}</h3>
-                    <p class="issue-description">${issue.description}</p>
+                    <p class="issue-description">${issue.desc}</p>
                     <div class="issue-topics">
                         ${issue.topics.map(t => `<span class="topic-tag">${t}</span>`).join('')}
                     </div>
@@ -397,18 +142,17 @@
         function renderPagination(total) {
             const pagination = document.getElementById('pagination');
             const totalPages = Math.ceil(total / issuesPerPage);
+            if (totalPages <= 1) { pagination.innerHTML = ''; return; }
             
-            let html = `
+            pagination.innerHTML = `
                 <button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Назад</button>
                 <span class="page-info">Стр. ${currentPage} из ${totalPages}</span>
                 <button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Вперёд →</button>
             `;
-            
-            pagination.innerHTML = html;
         }
 
         function changePage(page) {
-            const totalPages = Math.ceil(totalIssues / issuesPerPage);
+            const totalPages = Math.ceil(ARCHIVE_DATA.length / issuesPerPage);
             if (page >= 1 && page <= totalPages) {
                 currentPage = page;
                 renderArchive();
@@ -416,10 +160,7 @@
             }
         }
 
-        function goHome() {
-            window.location.href = 'index.html';
-        }
-
+        function goHome() { window.location.href = 'index.html'; }
         document.addEventListener('DOMContentLoaded', renderArchive);
     </script>
 </body>
