@@ -67,6 +67,26 @@
             font-weight: 600;
         }
 
+        /* Кнопка "На главную" */
+        .btn-home {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            background: transparent;
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 2px solid var(--accent-color);
+            transition: all 0.2s ease;
+        }
+
+        .btn-home:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
         h1.logo {
             font-size: 5rem;
             font-weight: 900;
@@ -502,6 +522,11 @@
             .modal-body {
                 padding: 20px;
             }
+            
+            .btn-home {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -512,7 +537,7 @@
             <div class="header-top">
                 <span class="date-display">1 мая 2026 г.</span>
                 <span class="issue-info">Выпуск №1</span>
-                <span>Цена: Бесплатно</span>
+                <a href="index.html" class="btn-home">НА ГЛАВНУЮ</a>
             </div>
             
             <h1 class="logo">Gazeta Y45</h1>
