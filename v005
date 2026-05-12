@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Y45 - Выпуск №5</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #000000;
+            --secondary-text: #444444;
+            --border-color: #dddddd;
+            --light-gray: #f5f5f5;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            border-bottom: 4px solid var(--accent-color);
+            padding: 30px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-family: var(--font-sans);
+        }
+
+        .issue-info {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .date-display {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .btn-home {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            background: transparent;
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 2px solid var(--accent-color);
+            transition: all 0.2s ease;
+        }
+
+        .btn-home:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        h1.logo {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin: 20px 0;
+            line-height: 1;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.5;
+        }
+
+        .section-header {
+            border-top: 3px solid var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            margin: 50px 0 30px;
+        }
+
+        .section-title {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 8px 20px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .hero-article {
+            border-right: 1px solid var(--border-color);
+            padding-right: 40px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) contrast(120%);
+            margin-bottom: 25px;
+        }
+
+        .category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 2px solid var(--accent-color);
+            padding: 4px 12px;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .category.outline {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-excerpt {
+            font-size: 1.25rem;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+            font-family: var(--font-sans);
+            line-height: 1.6;
+        }
+
+        .hero-content {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .author {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+            display: block;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .article-card {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+
+        .article-card:last-child { border-bottom: none; }
+
+        .article-card h3 {
+            font-size: 1.4rem;
+            margin: 12px 0;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+        }
+
+        .small-img {
+            width: 100%;
+            height: 180px;
+            background-color: #eee;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .article-block {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+        }
+
+        .article-block h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .article-block .article-image {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            filter: grayscale(100%);
+            object-fit: cover;
+        }
+
+        .article-block p {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--secondary-text);
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .read-more:hover { opacity: 0.7; }
+
+        .quote-block {
+            background: var(--light-gray);
+            border-left: 5px solid var(--accent-color);
+            padding: 30px;
+            margin: 30px 0;
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-weight: bold;
+            font-style: normal;
+            font-family: var(--font-sans);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            border: 3px solid var(--accent-color);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 25px;
+            position: relative;
+        }
+
+        .modal-category {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+            background: var(--bg-color);
+            color: var(--accent-color);
+            padding: 4px 12px;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover { opacity: 0.7; }
+
+        .modal-body { padding: 30px; }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            margin-bottom: 25px;
+        }
+
+        .modal-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .modal-text p { margin-bottom: 20px; }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-author { font-style: italic; }
+        .modal-date { font-weight: 600; }
+
+        footer {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 50px 0 30px;
+            text-align: center;
+            font-family: var(--font-sans);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        footer .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            h1.logo { font-size: 3rem; }
+            .main-grid { grid-template-columns: 1fr; }
+            .hero-article {
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 4px solid var(--accent-color);
+                padding-bottom: 40px;
+            }
+            .articles-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2rem; }
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .modal-title { font-size: 1.5rem; }
+            .modal-image { height: 250px; }
+            .modal-body { padding: 20px; }
+            .btn-home { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <span class="date-display">5 мая 2026 г.</span>
+                <span class="issue-info">Выпуск №5</span>
+                <a href="index.html" class="btn-home">НА ГЛАВНУЮ</a>
+            </div>
+            
+            <h1 class="logo">Gazeta Y45</h1>
+            
+            <p class="subtitle">
+                Выпуск №5: Цифровой рубль: пилотный запуск<br>
+                Финансы, ЦБ, цифровизация. Главные новости за 5 мая 2026 г.
+            </p>
+        </header>
+
+        <!-- Финансы -->
+        <section class="section-header">
+            <h2 class="section-title">Финансы</h2>
+        </section>
+
+        <main class="main-grid">
+            <!-- Основная статья -->
+            <article class="hero-article">
+                <div class="hero-image"></div>
+                <span class="category">Цифровые валюты ЦБ</span>
+                <h2 class="hero-title">Цифровой рубль: пилотный запуск</h2>
+                <p class="hero-excerpt">
+                    Центральный банк России объявил о старте пилотного проекта цифрового рубля 
+                    с участием 15 банков и 10 000 пользователей. Новая форма национальной валюты 
+                    откроет возможности для мгновенных и безопасных платежей.
+                </p>
+                <div class="hero-content">
+                    <p>
+                        5 мая 2026 года Банк России официально запустил пилотный проект 
+                        цифрового рубля — третьей формы национальной валюты наряду с наличными 
+                        и безналичными средствами. В тестировании участвуют 15 крупнейших банков 
+                        и 10 000 физических лиц из 12 регионов страны.
+                    </p>
+                    <p>
+                        Цифровой рубль хранится на специальных электронных кошельках в платформе 
+                        Банка России, обеспечивая мгновенные переводы без комиссий между пользователями, 
+                        оплату товаров и услуг, а также получение социальных выплат.
+                    </p>
+                    <div class="quote-block">
+                        "Цифровой рубль — это не замена традиционным деньгам, а их современное 
+                        дополнение. Он повышает прозрачность финансовых операций, снижает издержки 
+                        и открывает новые возможности для граждан и бизнеса."
+                        <div class="quote-author">— Эльвира Набиуллина, Председатель Банка России</div>
+                    </div>
+                    <p>
+                        Полномасштабное внедрение цифрового рубля запланировано на 2027 год. 
+                        К проекту могут присоединиться дополнительные банки и платёжные сервисы 
+                        после успешного завершения пилотной фазы.
+                    </p>
+                </div>
+                <span class="author">Автор: Пузачев Виктор</span>
+            </article>
+
+            <!-- Боковая колонка -->
+            <aside class="sidebar">
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Digital Ruble" class="small-img">
+                    <span class="category outline">Финансы</span>
+                    <h3>Как получить цифровой рубль?</h3>
+                    <p>Участники пилота могут открыть кошелёк через мобильное приложение банка-партнёра. 
+                    Конвертация происходит 1:1 с обычным рублём без комиссий.</p>
+                </article>
+
+                <article class="article-card">
+                    <span class="category outline">Финансы</span>
+                    <h3>Безопасность цифрового рубля</h3>
+                    <p>Платформа использует квантово-устойчивое шифрование и биометрическую 
+                    аутентификацию. Все операции фиксируются в защищённом реестре ЦБ.</p>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2071&auto=format&fit=crop" alt="Banking App" class="small-img">
+                    <span class="category outline">Финансы</span>
+                    <h3>Умные контракты для бизнеса</h3>
+                    <p>Цифровой рубль поддерживает программируемые платежи: автоматические 
+                    расчёты при выполнении условий, рассрочки, краудфандинг и госзакупки.</p>
+                </article>
+            </aside>
+        </main>
+
+        <!-- Общество -->
+        <section class="section-header">
+            <h2 class="section-title">Общество</h2>
+        </section>
+
+        <div class="articles-grid">
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop" alt="Digital Payments" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Цифровой рубль упростит получение соцвыплат</h3>
+                <p>
+                    Пенсии, пособия и студенческие стипендии можно будет получать мгновенно 
+                    на цифровой кошелёк. Система исключит задержки и ошибки при распределении 
+                    бюджетных средств.
+                </p>
+                <p>
+                    Особое преимущество — возможность адресной помощи: средства можно 
+                    запрограммировать на определённые категории товаров или услуг.
+                </p>
+                <button class="read-more" data-modal="modal1">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae194bff8?q=80&w=2070&auto=format&fit=crop" alt="Education" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Финансовая грамотность: новый школьный курс</h3>
+                <p>
+                    С сентября 2026 года в программу средней школы вводится модуль 
+                    «Цифровые финансы», где ученики изучат основы работы с цифровым рублём, 
+                    кибербезопасность и управление личным бюджетом.
+                </p>
+                <p>
+                    Курс разработан совместно с Банком России и включает интерактивные 
+                    симуляции платежей и защиты от мошенничества.
+                </p>
+                <button class="read-more" data-modal="modal2">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1556742044-3c67e6f6c5c5?q=80&w=2070&auto=format&fit=crop" alt="Small Business" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Малый бизнес оценил преимущества цифрового рубля</h3>
+                <p>
+                    Предприниматели отмечают снижение комиссий за эквайринг до 0,3% 
+                    (против 2-3% у карт) и ускорение оборота средств: платежи поступают 
+                    на счёт мгновенно, 24/7.
+                </p>
+                <p>
+                    Пилотные магазины в Москве, Казани и Новосибирске уже принимают 
+                    цифровой рубль через QR-коды и NFC-терминалы.
+                </p>
+                <button class="read-more" data-modal="modal3">Читать далее →</button>
+            </article>
+
+            <article class="article-block">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="Privacy" class="article-image">
+                <span class="category outline">Общество</span>
+                <h3>Защита персональных данных в цифровой среде</h3>
+                <p>
+                    Банк России гарантирует: информация о тратах пользователей цифрового 
+                    рубля не передаётся третьим лицам без судебного решения. 
+                    Анонимность малых платежей до 15 000 ₽ сохраняется.
+                </p>
+                <p>
+                    Система соответствует международным стандартам защиты данных 
+                    и проходит регулярные аудиты независимых экспертов.
+                </p>
+                <button class="read-more" data-modal="modal4">Читать далее →</button>
+            </article>
+        </div>
+
+        <!-- Дополнительные новости -->
+        <section class="section-header">
+            <h2 class="section-title">Главные новости дня</h2>
+        </section>
+
+        <div class="main-grid">
+            <aside class="sidebar" style="flex-direction: row; flex-wrap: wrap;">
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Финансы</span>
+                    <h3>Курс рубля стабилен на фоне запуска пилота</h3>
+                    <p>Аналитики отмечают отсутствие волатильности: цифровой рубль 
+                    воспринимается рынком как логичное развитие финансовой системы.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Технологии</span>
+                    <h3>Отечественная платформа для цифровых валют</h3>
+                    <p>Инфраструктура цифрового рубля полностью разработана российскими 
+                    специалистами и не зависит от зарубежных решений.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Общество</span>
+                    <h3>Опрос: 68% готовы попробовать цифровой рубль</h3>
+                    <p>ВЦИОМ представил данные: большинство россиян позитивно 
+                    относятся к новой форме валюты, особенно молодёжь и жители мегаполисов.</p>
+                </article>
+
+                <article class="article-card" style="flex: 1; min-width: 250px;">
+                    <span class="category outline">Мир</span>
+                    <h3>ЦБ других стран следят за российским опытом</h3>
+                    <p>Представители центральных банков Китая, Индии и Бразилии 
+                    запросили методические материалы по внедрению цифровых валют.</p>
+                </article>
+            </aside>
+        </div>
+
+    </div>
+
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Цифровой рубль упростит получение соцвыплат</h2>
+                <button class="modal-close" data-close="modal1">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop" alt="Social Payments" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 5 мая 2026 года.</strong> Внедрение цифрового рубля кардинально меняет систему социальных выплат: пенсии, пособия, материнский капитал и студенческие стипендии теперь можно получать мгновенно и без посредников.</p>
+                    
+                    <p>Преимущества для получателей выплат:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Мгновенное зачисление средств — без задержек между банками</li>
+                        <li>Отсутствие комиссий за перевод и обслуживание кошелька</li>
+                        <li>Круглосуточный доступ к средствам, включая выходные и праздники</li>
+                        <li>Возможность программирования выплат: например, только на лекарства или продукты</li>
+                        <li>Прозрачность: получатель видит всю историю поступлений и трат</li>
+                    </ul>
+
+                    <p>Для пенсионеров и социально уязвимых категорий граждан предусмотрены упрощённые интерфейсы и поддержка через кол-центры. Также сохраняется возможность конвертации цифрового рубля в наличные через банкоматы партнёров.</p>
+
+                    <div class="quote-block">
+                        "Цифровой рубль делает социальную поддержку более адресной и эффективной. Мы можем быть уверены, что помощь доходит именно до тех, кто в ней нуждается."
+                        <div class="quote-author">— Татьяна Голикова, заместитель Председателя Правительства</div>
+                    </div>
+
+                    <p>Пилотный проект охватывает выплату пенсий в 5 регионах и детских пособий — в 7. По итогам тестирования будет принято решение о масштабировании на всю страну к концу 2026 года.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Пузачев Виктор</span>
+                <span class="modal-date">5 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Финансовая грамотность: новый школьный курс</h2>
+                <button class="modal-close" data-close="modal2">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae194bff8?q=80&w=2070&auto=format&fit=crop" alt="Financial Education" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 5 мая 2026 года.</strong> Министерство просвещения совместно с Банком России представило обновлённую программу по финансовой грамотности, которая с сентября 2026 года станет обязательной для учащихся 7-11 классов.</p>
+                    
+                    <p>Содержание курса «Цифровые финансы»:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Основы работы цифрового рубля: кошельки, переводы, оплата</li>
+                        <li>Кибербезопасность: как распознать фишинг и защитить аккаунт</li>
+                        <li>Личный бюджет: планирование расходов, накопления, инвестиции</li>
+                        <li>Права потребителя финансовых услуг и алгоритмы защиты</li>
+                        <li>Практикум: симуляция платежей в защищённой учебной среде</li>
+                    </ul>
+
+                    <p>Для учителей разработаны методические материалы, интерактивные презентации и доступ к демо-платформе цифрового рубля. Более 20 000 педагогов пройдут курсы повышения квалификации в летний период.</p>
+
+                    <div class="quote-block">
+                        "Финансовая грамотность — такой же важный навык, как чтение и математика. Мы готовим поколение, которое будет уверенно ориентироваться в цифровой экономике."
+                        <div class="quote-author">— Сергей Кравцов, Министр просвещения РФ</div>
+                    </div>
+
+                    <p>Курс будет интегрирован в предметы «Обществознание» и «Информатика», а для старших классов предусмотрены факультативы по предпринимательству и инвестициям.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Пузачев Виктор</span>
+                <span class="modal-date">5 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Малый бизнес оценил преимущества цифрового рубля</h2>
+                <button class="modal-close" data-close="modal3">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1556742044-3c67e6f6c5c5?q=80&w=2070&auto=format&fit=crop" alt="Small Business" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 5 мая 2026 года.</strong> Предприниматели, участвующие в пилотном проекте цифрового рубля, отмечают значительное снижение издержек и ускорение финансовых операций.</p>
+                    
+                    <p>Выгоды для малого и среднего бизнеса:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Комиссия за приём платежей — 0,3% против 2-3% у карт</li>
+                        <li>Мгновенное зачисление средств на расчётный счёт 24/7</li>
+                        <li>Упрощённая интеграция через API и готовые модули для популярных CMS</li>
+                        <li>Программируемые платежи: автоматические отчисления поставщикам, налоги, зарплата</li>
+                        <li>Прозрачная отчётность для налоговой и банков</li>
+                    </ul>
+
+                    <p>Для приёма цифрового рубля достаточно смартфона с камерой: покупатель сканирует QR-код и подтверждает платеж биометрией. Терминалы с поддержкой NFC также доступны для офлайн-точек.</p>
+
+                    <div class="quote-block">
+                        "Цифровой рубль снимает с нас нагрузку по работе с кассами и эквайрингом. Деньги приходят сразу, комиссии минимальны — это реально помогает развивать бизнес."
+                        <div class="quote-author">— Анна Петрова, владелица сети кофеен</div>
+                    </div>
+
+                    <p>Банк России планирует запустить программу субсидирования подключения к цифровому рублю для микропредприятий и самозанятых в третьем квартале 2026 года.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Пузачев Виктор</span>
+                <span class="modal-date">5 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-category">Общество</span>
+                <h2 class="modal-title">Защита персональных данных в цифровой среде</h2>
+                <button class="modal-close" data-close="modal4">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop" alt="Data Privacy" class="modal-image">
+                <div class="modal-text">
+                    <p><strong>Москва, 5 мая 2026 года.</strong> Банк России опубликовал подробную политику защиты персональных данных пользователей цифрового рубля, отвечающую самым строгим международным стандартам.</p>
+                    
+                    <p>Принципы защиты приватности:</p>
+                    
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Анонимность малых платежей: операции до 15 000 ₽ не привязываются к личности</li>
+                        <li>Шифрование всех данных квантово-устойчивыми алгоритмами</li>
+                        <li>Доступ к истории операций только для владельца кошелька и ЦБ (по запросу)</li>
+                        <li>Запрет на передачу данных третьим лицам без судебного решения</li>
+                        <li>Регулярные аудиты безопасности независимыми международными экспертами</li>
+                    </ul>
+
+                    <p>Платформа цифрового рубля работает в изолированном контуре Банка России и не использует облачные сервисы иностранных провайдеров. Все серверы расположены на территории РФ.</p>
+
+                    <div class="quote-block">
+                        "Доверие граждан — основа успеха цифрового рубля. Мы гарантируем: ваши финансы и персональные данные находятся под максимальной защитой."
+                        <div class="quote-author">— Ольга Скоробогатова, первый зампред Банка России</div>
+                    </div>
+
+                    <p>Для дополнительной безопасности пользователи могут настроить двухфакторную аутентификацию, лимиты на траты и уведомления о всех операциях в реальном времени.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-author">Автор: Пузачев Виктор</span>
+                <span class="modal-date">5 мая 2026 г.</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">GAZETA Y45</div>
+            <p>Выпуск №5 от 5 мая 2026 года</p>
+            <p>Аналитика. Репортажи. Экспертные оценки.</p>
+            
+            <div class="footer-info">
+                <p>&copy; 2026 Gazeta Y45. Все права защищены.</p>
+                <p>Главный редактор: Пузачев Виктор</p>
+                <p>Дизайн вдохновлен классической журналистикой</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const openButtons = document.querySelectorAll('[data-modal]');
+            const closeButtons = document.querySelectorAll('[data-close]');
+            const modals = document.querySelectorAll('.modal');
+
+            openButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-close');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
